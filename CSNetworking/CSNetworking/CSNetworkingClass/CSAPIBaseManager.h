@@ -27,7 +27,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  return @"community.searchMap";
  }
  
- - (RTServiceType)serviceType
+ - (RTdomainName)domainName
  {
  return RTcasatwyServiceID;
  }
@@ -255,7 +255,7 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 
 @required
 - (NSString *)methodName;
-- (NSString *)serviceType;
+- (NSString *)domainName;
 - (CSAPIManagerRequestType)requestType;
 - (BOOL)shouldCache;
 

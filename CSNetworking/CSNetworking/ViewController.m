@@ -23,7 +23,7 @@
 }
 
 - (IBAction)requestAction:(id)sender {
-    for (NSInteger i=0; i<10; i++) {
+    for (NSInteger i=0; i<1; i++) {
         [self.manager loadData];
     }
 }
@@ -31,9 +31,10 @@
 - (NSDictionary *)paramsForAPI:(__kindof CSAPIBaseManager *)manager
 {
     return @{
-             @"kTestAPIManagerParamsKeyLatitude":@(31.228000),
-             @"kTestAPIManagerParamsKeyLongitude":@(121.454290)
-             };;
+             @"location": [NSString stringWithFormat:@"%@,%@", @(121.454290), @(31.228000)],
+             @"output": @"json",
+             @"key": @"384ecc4559ffc3b9ed1f81076c5f8424"
+             };
 }
 
 - (void)managerCallAPIDidSuccess:(__kindof CSAPIBaseManager *)manager

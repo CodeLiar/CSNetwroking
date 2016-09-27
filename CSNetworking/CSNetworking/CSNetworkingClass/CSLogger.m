@@ -8,7 +8,6 @@
 
 #import "CSLogger.h"
 #import "CSURLResponse.h"
-#import "CSService.h"
 #import "NSObject+CSNetworkingMethods.h"
 #import "NSMutableString+CSNetworkingMethods.h"
 #import "NSArray+CSNetworkingMethods.h"
@@ -21,36 +20,6 @@
 @end
 
 @implementation CSLogger
-
-+ (void)logDebugInfoWithRequest:(NSURLRequest *)request apiName:(NSString *)apiName service:(CSService *)service requestParams:(id)requestParams httpMethod:(NSString *)httpMethod
-{
-#ifdef DEBUG
-    BOOL isOnline = NO;
-    if ([service respondsToSelector:@selector(isOnline)]) {
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[service methodSignatureForSelector:@selector(isOnline)]];
-        invocation.target = service;
-        invocation.selector = @selector(isOnline);
-        [invocation invoke];
-        [invocation getReturnValue:&isOnline];
-    }
-    
-    NSMutableString *logString = [NSMutableString stringWithString:@"\n\n**************************************************************\n*                       Request Start                        *\n**************************************************************\n\n"];
-    
-    [logString appendFormat:@"API Name:\t\t%@\n", [apiName CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Method:\t\t\t%@\n", [httpMethod CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Version:\t\t%@\n", [service.apiVersion CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Service:\t\t%@\n", [service class]];
-    [logString appendFormat:@"Status:\t\t\t%@\n", isOnline ? @"online" : @"offline"];
-    [logString appendFormat:@"Public Key:\t\t%@\n", [service.publicKey CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Private Key:\t%@\n", [service.privateKey CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Params:\n%@", requestParams];
-    
-    [logString appendURLRequest:request];
-    
-    [logString appendFormat:@"\n\n**************************************************************\n*                         Request End                        *\n**************************************************************\n\n\n\n"];
-    NSLog(@"%@", logString);
-#endif
-}
 
 + (void)logDebugInfoWithResponse:(NSHTTPURLResponse *)response responseString:(NSString *)responseString request:(NSURLRequest *)request error:(NSError *)error
 {
@@ -79,16 +48,12 @@
 #endif
 }
 
-+ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(CSService *)service
++ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(NSString *)service
 {
 #ifdef DEBUG
     NSMutableString *logString = [NSMutableString stringWithString:@"\n\n==============================================================\n=                      Cached Response                       =\n==============================================================\n\n"];
     
     [logString appendFormat:@"API Name:\t\t%@\n", [methodName CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Version:\t\t%@\n", [service.apiVersion CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Service:\t\t%@\n", [service class]];
-    [logString appendFormat:@"Public Key:\t\t%@\n", [service.publicKey CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Private Key:\t%@\n", [service.privateKey CS_defaultValue:@"N/A"]];
     [logString appendFormat:@"Method Name:\t%@\n", methodName];
     [logString appendFormat:@"Params:\n%@\n\n", response.requestParams];
     [logString appendFormat:@"Content:\n\t%@\n\n", response.contentString];

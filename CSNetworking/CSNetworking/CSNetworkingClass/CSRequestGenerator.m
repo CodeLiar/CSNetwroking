@@ -7,7 +7,6 @@
 //
 
 #import "CSRequestGenerator.h"
-#import "CSServiceFactory.h"
 #import "CSAppContext.h"
 #import <AFNetworking.h>
 #import "NSURLRequest+CSNetworkingMethods.h"
@@ -33,13 +32,7 @@
 
 - (NSURLRequest *)generateGETRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    CSService *service = [[CSServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
-    NSString *urlString;
-    if (service.apiVersion.length != 0) {
-        urlString = [NSString stringWithFormat:@"%@/%@/%@", service.apiBaseUrl, service.apiVersion, methodName];
-    } else {
-        urlString = [NSString stringWithFormat:@"%@/%@", service.apiBaseUrl, methodName];
-    }
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -53,8 +46,7 @@
 
 - (NSURLRequest *)generatePOSTRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    CSService *service = [[CSServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", service.apiBaseUrl, service.apiVersion, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -69,8 +61,7 @@
 
 - (NSURLRequest *)generatePutRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    CSService *service = [[CSServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", service.apiBaseUrl, service.apiVersion, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -85,8 +76,7 @@
 
 - (NSURLRequest *)generateDeleteRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    CSService *service = [[CSServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", service.apiBaseUrl, service.apiVersion, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     

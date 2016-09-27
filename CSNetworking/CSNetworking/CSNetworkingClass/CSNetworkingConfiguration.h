@@ -31,7 +31,4 @@ static NSTimeInterval kCSNetworkingTimeoutSeconds = 20.0f;
 static NSTimeInterval kCSCacheOutdateTimeSeconds = 300; // 5分钟的cache过期时间
 static NSUInteger kCSCacheCountLimit = 1000; // 最多1000条cache
 
-// services
-extern NSString * const kCSServiceGDMapV3;
-
 #endif /* CSNetworkingConfiguration_h */

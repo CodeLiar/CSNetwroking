@@ -10,13 +10,12 @@
 #import "CSCache.h"
 #import "CSAPIProxy.h"
 #import "CSLogger.h"
-#import "CSServiceFactory.h"
 #import "CSAppContext.h"
 
 #define CSCallAPI(REQUEST_METHOD, REQUEST_ID)                                                   \
 {                                                                                               \
 __weak typeof(self) weakSelf = self;                                                        \
-REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams serviceIdentifier:self.child.serviceType methodName:self.child.methodName success:^(CSURLResponse *response) { \
+REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams serviceIdentifier:self.child.domainName methodName:self.child.methodName success:^(CSURLResponse *response) { \
 __strong typeof(weakSelf) strongSelf = weakSelf;                                        \
 [strongSelf successedOnCallingAPI:response];                                            \
 } fail:^(CSURLResponse *response) {                                                        \
@@ -121,7 +120,7 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
-    NSString *serviceIdentifier = self.child.serviceType;
+    NSString *serviceIdentifier = self.child.domainName;
     NSString *methodName = self.child.methodName;
     NSData *result = [self.cache fetchCachedDataWithServiceIdentifier:serviceIdentifier methodName:methodName requestParams:params];
     
@@ -134,7 +133,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName serviceIdentifier:[[CSServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier]];
+        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName serviceIdentifier:self.child.domainName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
@@ -244,7 +243,7 @@ NS_ASSUME_NONNULL_END
     if ([self.validator manager:self isCorrectWithCallBackData:response.content]) {
         
         if ([self shouldCache] && !response.isCache) {
-            [self.cache saveCacheWithData:response.responseData serviceIdentifier:self.child.serviceType methodName:self.child.methodName requestParams:response.requestParams];
+            [self.cache saveCacheWithData:response.responseData serviceIdentifier:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams];
         }
         
         if ([self beforePerformSuccessWithResponse:response]) {

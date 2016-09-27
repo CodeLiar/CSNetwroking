@@ -12,9 +12,8 @@
 @interface CSLogger : NSObject
 
 
-+ (void)logDebugInfoWithRequest:(NSURLRequest *)request apiName:(NSString *)apiName service:(CSService *)service requestParams:(id)requestParams httpMethod:(NSString *)httpMethod;
 + (void)logDebugInfoWithResponse:(NSHTTPURLResponse *)response responseString:(NSString *)responseString request:(NSURLRequest *)request error:(NSError *)error;
-+ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(CSService *)service;
++ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(NSString *)service;
 
 + (instancetype)sharedInstance;
 

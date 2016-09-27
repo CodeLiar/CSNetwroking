@@ -23,12 +23,12 @@
 
 - (NSString *)methodName
 {
-    return @"geocode/regeo";
+    return @"v3/geocode/regeo";
 }
 
-- (NSString *)serviceType
+- (NSString *)domainName
 {
-    return kCSServiceGDMapV3;
+    return @"http://restapi.amap.com";
 }
 
 - (BOOL)shouldCache
@@ -41,14 +41,6 @@
     return CSAPIManagerRequestTypeGet;
 }
 
-- (NSDictionary *)reformParams:(NSDictionary *)params
-{
-    NSMutableDictionary *resultParams = [[NSMutableDictionary alloc] init];
-    resultParams[@"key"] = [[CSServiceFactory sharedInstance] serviceWithIdentifier:kCSServiceGDMapV3].publicKey;
-    resultParams[@"location"] = [NSString stringWithFormat:@"%@,%@", params[@"kTestAPIManagerParamsKeyLongitude"], params[@"kTestAPIManagerParamsKeyLatitude"]];
-    resultParams[@"output"] = @"json";
-    return resultParams;
-}
 
 #pragma mark - CTAPIManagerValidator
 - (BOOL)manager:(__kindof CSAPIBaseManager *)manager isCorrectWithParamsData:(NSDictionary *)data

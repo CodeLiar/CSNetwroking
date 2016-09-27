@@ -8,6 +8,6 @@
 
 #import "CSNetWorking.h"
 
-@interface TestAPIManager : CSAPIBaseManager <CSAPIManager>
+@interface TestAPIManager : CSAPIBaseManager <CSAPIManager, CSAPIManagerValidator>
 
 @end

@@ -27,9 +27,6 @@
 		AE9BDA591D98F1F100B482A6 /* CSURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA581D98F1F100B482A6 /* CSURLResponse.m */; };
 		AE9BDA5C1D98F3E500B482A6 /* NSURLRequest+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA5B1D98F3E500B482A6 /* NSURLRequest+CSNetworkingMethods.m */; };
 		AE9BDA5F1D98F3F600B482A6 /* NSObject+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA5E1D98F3F600B482A6 /* NSObject+CSNetworkingMethods.m */; };
-		AE9BDA621D98FCE400B482A6 /* CSServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA611D98FCE400B482A6 /* CSServiceFactory.m */; };
-		AE9BDA651D98FD1900B482A6 /* CSService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA641D98FD1900B482A6 /* CSService.m */; };
-		AE9BDA681D98FEEC00B482A6 /* LDService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA671D98FEEC00B482A6 /* LDService.m */; };
 		AE9BDA6B1D98FFB500B482A6 /* CSAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA6A1D98FFB500B482A6 /* CSAppContext.m */; };
 		AE9BDA711D99048B00B482A6 /* UIDevice+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA701D99048B00B482A6 /* UIDevice+CSNetworkingMethods.m */; };
 		AE9BDA741D99052900B482A6 /* NSString+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA731D99052900B482A6 /* NSString+CSNetworkingMethods.m */; };
@@ -104,12 +101,6 @@
 		AE9BDA5B1D98F3E500B482A6 /* NSURLRequest+CSNetworkingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+CSNetworkingMethods.m"; sourceTree = "<group>"; };
 		AE9BDA5D1D98F3F600B482A6 /* NSObject+CSNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+CSNetworkingMethods.h"; sourceTree = "<group>"; };
 		AE9BDA5E1D98F3F600B482A6 /* NSObject+CSNetworkingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CSNetworkingMethods.m"; sourceTree = "<group>"; };
-		AE9BDA601D98FCE400B482A6 /* CSServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSServiceFactory.h; sourceTree = "<group>"; };
-		AE9BDA611D98FCE400B482A6 /* CSServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSServiceFactory.m; sourceTree = "<group>"; };
-		AE9BDA631D98FD1900B482A6 /* CSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSService.h; sourceTree = "<group>"; };
-		AE9BDA641D98FD1900B482A6 /* CSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSService.m; sourceTree = "<group>"; };
-		AE9BDA661D98FEEC00B482A6 /* LDService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDService.h; sourceTree = "<group>"; };
-		AE9BDA671D98FEEC00B482A6 /* LDService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDService.m; sourceTree = "<group>"; };
 		AE9BDA691D98FFB500B482A6 /* CSAppContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAppContext.h; sourceTree = "<group>"; };
 		AE9BDA6A1D98FFB500B482A6 /* CSAppContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppContext.m; sourceTree = "<group>"; };
 		AE9BDA6F1D99048B00B482A6 /* UIDevice+CSNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+CSNetworkingMethods.h"; sourceTree = "<group>"; };
@@ -262,14 +253,8 @@
 				AE9BDA7D1D991BE700B482A6 /* CSRequestGenerator.m */,
 				AE9BDA7F1D991CCA00B482A6 /* CSSignatureGenerator.h */,
 				AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */,
-				AE9BDA601D98FCE400B482A6 /* CSServiceFactory.h */,
-				AE9BDA611D98FCE400B482A6 /* CSServiceFactory.m */,
-				AE9BDA631D98FD1900B482A6 /* CSService.h */,
-				AE9BDA641D98FD1900B482A6 /* CSService.m */,
 				AE9BDA751D9911DA00B482A6 /* CSUDIDGenerator.h */,
 				AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */,
-				AE9BDA661D98FEEC00B482A6 /* LDService.h */,
-				AE9BDA671D98FEEC00B482A6 /* LDService.m */,
 				AE9BDA691D98FFB500B482A6 /* CSAppContext.h */,
 				AE9BDA6A1D98FFB500B482A6 /* CSAppContext.m */,
 				AE9BDA571D98F1F100B482A6 /* CSURLResponse.h */,
@@ -599,11 +584,8 @@
 				AE9BDA7B1D99184C00B482A6 /* CSLocationManager.m in Sources */,
 				AE9BDA711D99048B00B482A6 /* UIDevice+CSNetworkingMethods.m in Sources */,
 				AE9BDA8A1D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.m in Sources */,
-				AE9BDA651D98FD1900B482A6 /* CSService.m in Sources */,
 				AE9BDA5C1D98F3E500B482A6 /* NSURLRequest+CSNetworkingMethods.m in Sources */,
-				AE9BDA681D98FEEC00B482A6 /* LDService.m in Sources */,
 				AE9BDA0B1D952F2D00B482A6 /* main.m in Sources */,
-				AE9BDA621D98FCE400B482A6 /* CSServiceFactory.m in Sources */,
 				AE9BDA501D98D1C400B482A6 /* NSDictionary+CSNetworkingMethods.m in Sources */,
 				AE9BDA741D99052900B482A6 /* NSString+CSNetworkingMethods.m in Sources */,
 				AE326D221D9A4DF800E3861A /* TestAPIManager.m in Sources */,
