@@ -13,7 +13,7 @@
 
 
 + (void)logDebugInfoWithResponse:(NSHTTPURLResponse *)response responseString:(NSString *)responseString request:(NSURLRequest *)request error:(NSError *)error;
-+ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(NSString *)service;
++ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName domainName:(NSString *)service;
 
 + (instancetype)sharedInstance;
 

@@ -15,7 +15,7 @@
 #define CSCallAPI(REQUEST_METHOD, REQUEST_ID)                                                   \
 {                                                                                               \
 __weak typeof(self) weakSelf = self;                                                        \
-REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams serviceIdentifier:self.child.domainName methodName:self.child.methodName success:^(CSURLResponse *response) { \
+REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams domainName:self.child.domainName methodName:self.child.methodName success:^(CSURLResponse *response) { \
 __strong typeof(weakSelf) strongSelf = weakSelf;                                        \
 [strongSelf successedOnCallingAPI:response];                                            \
 } fail:^(CSURLResponse *response) {                                                        \
@@ -120,9 +120,9 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
-    NSString *serviceIdentifier = self.child.domainName;
+    NSString *domainName = self.child.domainName;
     NSString *methodName = self.child.methodName;
-    NSData *result = [self.cache fetchCachedDataWithServiceIdentifier:serviceIdentifier methodName:methodName requestParams:params];
+    NSData *result = [self.cache fetchCachedDataWithDomainName:domainName methodName:methodName requestParams:params];
     
     if (result == nil) {
         return NO;
@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName serviceIdentifier:self.child.domainName];
+        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName domainName:self.child.domainName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
@@ -243,7 +243,7 @@ NS_ASSUME_NONNULL_END
     if ([self.validator manager:self isCorrectWithCallBackData:response.content]) {
         
         if ([self shouldCache] && !response.isCache) {
-            [self.cache saveCacheWithData:response.responseData serviceIdentifier:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams];
+            [self.cache saveCacheWithData:response.responseData domainName:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams];
         }
         
         if ([self beforePerformSuccessWithResponse:response]) {

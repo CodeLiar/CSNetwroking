@@ -44,24 +44,24 @@
 
 #pragma mark - public method
 
-- (NSString *)keyWithServiceIdentifier:(NSString *)serviceIdentifier methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (NSString *)keyWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
 {
-    return [NSString stringWithFormat:@"%@%@%@", serviceIdentifier, methodName, [requestParams CS_urlParamsStringSignature:NO]];
+    return [NSString stringWithFormat:@"%@%@%@", domainName, methodName, [requestParams CS_urlParamsStringSignature:NO]];
 }
 
-- (nullable NSData *)fetchCachedDataWithServiceIdentifier:(NSString *)serviceIdentifier methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (nullable NSData *)fetchCachedDataWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
 {
-    return [self fetchCachedDataWithKey:[self keyWithServiceIdentifier:serviceIdentifier methodName:methodName requestParams:requestParams]];
+    return [self fetchCachedDataWithKey:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
 }
 
-- (void)saveCacheWithData:(NSData *)cachedData serviceIdentifier:(NSString *)serviceIdentifier methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (void)saveCacheWithData:(NSData *)cachedData domainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
 {
-    [self saveCacheWithData:cachedData key:[self keyWithServiceIdentifier:serviceIdentifier methodName:methodName requestParams:requestParams]];
+    [self saveCacheWithData:cachedData key:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
 }
 
-- (void)deleteCacheWithServiceIdentifier:(NSString *)serviceIdentifier methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (void)deleteCacheWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
 {
-    [self deleteCacheWithKey:[self keyWithServiceIdentifier:serviceIdentifier methodName:methodName requestParams:requestParams]];
+    [self deleteCacheWithKey:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
 }
 
 - (nullable NSData *)fetchCachedDataWithKey:(NSString *)key

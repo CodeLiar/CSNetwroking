@@ -30,9 +30,9 @@
     return sharedInstance;
 }
 
-- (NSURLRequest *)generateGETRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
+- (NSURLRequest *)generateGETRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -41,9 +41,9 @@
     return request;
 }
 
-- (NSURLRequest *)generatePOSTRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
+- (NSURLRequest *)generatePOSTRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -54,9 +54,9 @@
     return request;
 }
 
-- (NSURLRequest *)generatePutRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
+- (NSURLRequest *)generatePutRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
@@ -66,9 +66,9 @@
     return request;
 }
 
-- (NSURLRequest *)generateDeleteRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
+- (NSURLRequest *)generateDeleteRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", serviceIdentifier, methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
     [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     

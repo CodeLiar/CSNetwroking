@@ -48,7 +48,7 @@
 #endif
 }
 
-+ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(NSString *)service
++ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName domainName:(NSString *)service
 {
 #ifdef DEBUG
     NSMutableString *logString = [NSMutableString stringWithString:@"\n\n==============================================================\n=                      Cached Response                       =\n==============================================================\n\n"];

@@ -14,20 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (NSString *)keyWithServiceIdentifier:(NSString *)serviceIdentifier
+- (NSString *)keyWithDomainName:(NSString *)domainName
                             methodName:(NSString *)methodName
                          requestParams:(NSDictionary *)requestParams;
 
-- (nullable NSData *)fetchCachedDataWithServiceIdentifier:(NSString *)serviceIdentifier
+- (nullable NSData *)fetchCachedDataWithDomainName:(NSString *)domainName
                                       methodName:(NSString *)methodName
                                    requestParams:(NSDictionary *)requestParams;
 
 - (void)saveCacheWithData:(NSData *)cachedData
-        serviceIdentifier:(NSString *)serviceIdentifier
+        domainName:(NSString *)domainName
                methodName:(NSString *)methodName
             requestParams:(NSDictionary *)requestParams;
 
-- (void)deleteCacheWithServiceIdentifier:(NSString *)serviceIdentifier
+- (void)deleteCacheWithDomainName:(NSString *)domainName
                               methodName:(NSString *)methodName
                            requestParams:(NSDictionary *)requestParams;
 

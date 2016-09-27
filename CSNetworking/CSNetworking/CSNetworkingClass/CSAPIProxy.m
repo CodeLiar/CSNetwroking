@@ -54,30 +54,30 @@
 }
 
 #pragma mark - public methods
-- (NSInteger)callGETWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
+- (NSInteger)callGETWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
 {
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateGETRequestWithServiceIdentifier:servieIdentifier requestParams:params methodName:methodName];
+    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateGETRequestWithDomainName:servieIdentifier requestParams:params methodName:methodName];
     NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
     return [requestId integerValue];
 }
 
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
+- (NSInteger)callPOSTWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
 {
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePOSTRequestWithServiceIdentifier:servieIdentifier requestParams:params methodName:methodName];
+    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePOSTRequestWithDomainName:servieIdentifier requestParams:params methodName:methodName];
     NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
     return [requestId integerValue];
 }
 
-- (NSInteger)callPUTWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
+- (NSInteger)callPUTWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
 {
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePutRequestWithServiceIdentifier:servieIdentifier requestParams:params methodName:methodName];
+    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePutRequestWithDomainName:servieIdentifier requestParams:params methodName:methodName];
     NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
     return [requestId integerValue];
 }
 
-- (NSInteger)callDELETEWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
+- (NSInteger)callDELETEWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
 {
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateDeleteRequestWithServiceIdentifier:servieIdentifier requestParams:params methodName:methodName];
+    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateDeleteRequestWithDomainName:servieIdentifier requestParams:params methodName:methodName];
     NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
     return [requestId integerValue];
 }

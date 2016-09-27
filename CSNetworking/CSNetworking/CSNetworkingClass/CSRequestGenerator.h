@@ -13,10 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (NSURLRequest *)generateGETRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
-- (NSURLRequest *)generatePOSTRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
-- (NSURLRequest *)generatePutRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
-- (NSURLRequest *)generateDeleteRequestWithServiceIdentifier:(NSString *)serviceIdentifier requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
+- (NSURLRequest *)generateGETRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
+- (NSURLRequest *)generatePOSTRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
+- (NSURLRequest *)generatePutRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
+- (NSURLRequest *)generateDeleteRequestWithDomainName:(NSString *)domainName requestParams:(NSDictionary *)requestParams methodName:(NSString *)methodName;
 
 @end
 NS_ASSUME_NONNULL_END
