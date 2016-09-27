@@ -7,9 +7,9 @@
 //
 
 #import "CSRequestGenerator.h"
-#import "CSAppContext.h"
 #import <AFNetworking.h>
 #import "NSURLRequest+CSNetworkingMethods.h"
+#import "CSNetworkingConfiguration.h"
 
 @interface CSRequestGenerator ()
 
@@ -38,9 +38,6 @@
     
     NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"GET" URLString:urlString parameters:requestParams error:NULL];
     request.requestParams = requestParams;
-    if ([CSAppContext sharedInstance].accessToken) {
-        [request setValue:[CSAppContext sharedInstance].accessToken forHTTPHeaderField:@"xxxxxxxx"];
-    }
     return request;
 }
 
@@ -52,9 +49,7 @@
     
     NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"POST" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
-    if ([CSAppContext sharedInstance].accessToken) {
-        [request setValue:[CSAppContext sharedInstance].accessToken forHTTPHeaderField:@"xxxxxxxx"];
-    }
+    
     request.requestParams = requestParams;
     return request;
 }
@@ -67,9 +62,6 @@
     
     NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"PUT" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
-    if ([CSAppContext sharedInstance].accessToken) {
-        [request setValue:[CSAppContext sharedInstance].accessToken forHTTPHeaderField:@"xxxxxxxx"];
-    }
     request.requestParams = requestParams;
     return request;
 }
@@ -82,9 +74,6 @@
     
     NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"DELETE" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
-    if ([CSAppContext sharedInstance].accessToken) {
-        [request setValue:[CSAppContext sharedInstance].accessToken forHTTPHeaderField:@"xxxxxxxx"];
-    }
     request.requestParams = requestParams;
     return request;
 }

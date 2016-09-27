@@ -10,7 +10,7 @@
 #import "CSCache.h"
 #import "CSAPIProxy.h"
 #import "CSLogger.h"
-#import "CSAppContext.h"
+#import <AFNetworkReachabilityManager.h>
 
 #define CSCallAPI(REQUEST_METHOD, REQUEST_ID)                                                   \
 {                                                                                               \
@@ -422,11 +422,20 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)isReachable
 {
-    BOOL isReachability = [CSAppContext sharedInstance].isReachable;
+    BOOL isReachability = [self networkAvailable];
     if (!isReachability) {
         self.errorType = CSAPIManagerErrorTypeNoNetWork;
     }
     return isReachability;
+}
+
+- (BOOL)networkAvailable
+{
+    if ([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusUnknown) {
+        return YES;
+    } else {
+        return [[AFNetworkReachabilityManager sharedManager] isReachable];
+    }
 }
 
 - (BOOL)isLoading

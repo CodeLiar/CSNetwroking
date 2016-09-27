@@ -53,7 +53,8 @@
 #ifdef DEBUG
     NSMutableString *logString = [NSMutableString stringWithString:@"\n\n==============================================================\n=                      Cached Response                       =\n==============================================================\n\n"];
     
-    [logString appendFormat:@"API Name:\t\t%@\n", [methodName CS_defaultValue:@"N/A"]];
+    [logString appendFormat:@"API Name:\t\t%@/%@\n", service, [methodName CS_defaultValue:@"N/A"]];
+    [logString appendFormat:@"Domain Name:\t%@\n", service];
     [logString appendFormat:@"Method Name:\t%@\n", methodName];
     [logString appendFormat:@"Params:\n%@\n\n", response.requestParams];
     [logString appendFormat:@"Content:\n\t%@\n\n", response.contentString];

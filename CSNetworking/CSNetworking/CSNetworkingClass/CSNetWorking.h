@@ -10,7 +10,6 @@
 #define CSNetWorking_h
 
 #import "CSAPIProxy.h"
-#import "CSAppContext.h"
 #import "CSAPIBaseManager.h"
 #import "CSNetWorkingConfiguration.h"
 
