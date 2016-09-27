@@ -7,7 +7,6 @@
 //
 
 #import "CSLogger.h"
-#import "CSLoggerConfiguration.h"
 #import "CSURLResponse.h"
 #import "CSService.h"
 #import "NSObject+CSNetworkingMethods.h"
@@ -18,7 +17,6 @@
 
 @interface CSLogger ()
 
-@property (nonatomic, strong, readwrite) CSLoggerConfiguration *configParams;
 
 @end
 
@@ -108,25 +106,6 @@
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.configParams = [[CSLoggerConfiguration alloc] init];
-    }
-    return self;
-}
-
-- (void)logWithActionCode:(NSString *)actionCode params:(NSDictionary *)params
-{
-    NSMutableDictionary *actionDict = [[NSMutableDictionary alloc] init];
-    actionDict[@"act"] = actionCode;
-    [actionDict addEntriesFromDictionary:params];
-    [actionDict addEntriesFromDictionary:[CSCommonParamsGenerator commonParamsDictionaryForLog]];
-    NSDictionary *logJsonDict = @{self.configParams.sendActionKey:[@[actionDict] CS_jsonString]};
-    [[CSAPIProxy sharedInstance] callPOSTWithParams:logJsonDict serviceIdentifier:self.configParams.serviceType methodName:self.configParams.sendActionMethod success:nil fail:nil];
 }
 
 @end

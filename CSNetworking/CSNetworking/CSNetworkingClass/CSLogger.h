@@ -8,16 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class CSService, CSURLResponse, CSLoggerConfiguration;
+@class CSService, CSURLResponse;
 @interface CSLogger : NSObject
 
-@property (nonatomic, strong, readonly) CSLoggerConfiguration *configParams;
 
 + (void)logDebugInfoWithRequest:(NSURLRequest *)request apiName:(NSString *)apiName service:(CSService *)service requestParams:(id)requestParams httpMethod:(NSString *)httpMethod;
 + (void)logDebugInfoWithResponse:(NSHTTPURLResponse *)response responseString:(NSString *)responseString request:(NSURLRequest *)request error:(NSError *)error;
 + (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName serviceIdentifier:(CSService *)service;
 
 + (instancetype)sharedInstance;
-- (void)logWithActionCode:(NSString *)actionCode params:(NSDictionary *)params;
 
 @end
