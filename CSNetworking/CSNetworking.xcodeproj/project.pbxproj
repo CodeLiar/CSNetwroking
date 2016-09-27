@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1005601F4F3BC3F45E434A0F /* libPods-CSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C2849B13933338A33455DB /* libPods-CSNetworkingTests.a */; };
 		43F77E4E40112B0CDDFA458E /* libPods-CSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2EA1F54A218579B9AD6EE6B /* libPods-CSNetworking.a */; };
+		AE326D221D9A4DF800E3861A /* TestAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE326D211D9A4DF800E3861A /* TestAPIManager.m */; };
 		AE9BDA0B1D952F2D00B482A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA0A1D952F2D00B482A6 /* main.m */; };
 		AE9BDA0E1D952F2D00B482A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA0D1D952F2D00B482A6 /* AppDelegate.m */; };
 		AE9BDA111D952F2D00B482A6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA101D952F2D00B482A6 /* ViewController.m */; };
@@ -66,6 +67,8 @@
 		98C2849B13933338A33455DB /* libPods-CSNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CSNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA117C0D1F3A5A473BBA6640 /* Pods-CSNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CSNetworkingTests/Pods-CSNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		AD805EED9C30DC7C67137D3F /* libPods-CSNetworkingUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CSNetworkingUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE326D201D9A4DF800E3861A /* TestAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAPIManager.h; sourceTree = "<group>"; };
+		AE326D211D9A4DF800E3861A /* TestAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAPIManager.m; sourceTree = "<group>"; };
 		AE9BDA061D952F2D00B482A6 /* CSNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE9BDA0A1D952F2D00B482A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AE9BDA0C1D952F2D00B482A6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				AE9BDA0D1D952F2D00B482A6 /* AppDelegate.m */,
 				AE9BDA0F1D952F2D00B482A6 /* ViewController.h */,
 				AE9BDA101D952F2D00B482A6 /* ViewController.m */,
+				AE326D201D9A4DF800E3861A /* TestAPIManager.h */,
+				AE326D211D9A4DF800E3861A /* TestAPIManager.m */,
 				AE9BDA121D952F2D00B482A6 /* Main.storyboard */,
 				AE9BDA151D952F2D00B482A6 /* Assets.xcassets */,
 				AE9BDA171D952F2D00B482A6 /* LaunchScreen.storyboard */,
@@ -601,6 +606,7 @@
 				AE9BDA621D98FCE400B482A6 /* CSServiceFactory.m in Sources */,
 				AE9BDA501D98D1C400B482A6 /* NSDictionary+CSNetworkingMethods.m in Sources */,
 				AE9BDA741D99052900B482A6 /* NSString+CSNetworkingMethods.m in Sources */,
+				AE326D221D9A4DF800E3861A /* TestAPIManager.m in Sources */,
 				AE9BDA561D98F1B700B482A6 /* CSAPIProxy.m in Sources */,
 				AE9BDA531D98D22500B482A6 /* NSArray+CSNetworkingMethods.m in Sources */,
 				AE9BDA771D9911DA00B482A6 /* CSUDIDGenerator.m in Sources */,

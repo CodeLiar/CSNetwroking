@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_END
     [[CSAPIProxy sharedInstance] cancelRequestWithRequestID:@(requestID)];
 }
 
-- (id)fetchDataWithReformer:(id<CSAPIManagerDataReformer>)reformer
+- (id)fetchDataWithReformer:(nullable id<CSAPIManagerDataReformer>)reformer
 {
     id resultData = nil;
     if ([reformer respondsToSelector:@selector(manager:reformData:)]) {
@@ -161,6 +161,7 @@ NS_ASSUME_NONNULL_END
 #pragma mark - calling api
 - (NSInteger)loadData
 {
+    [self cancelAllRequests];
     NSDictionary *params = [self.paramSource paramsForAPI:self];
     NSInteger requestId = [self loadDataWithParams:params];
     return requestId;

@@ -10,7 +10,7 @@
 #import "LDService.h"
 
 // service name list
-NSString * const kCTServiceGDMapV3 = @"kCTServiceGDMapV3";
+NSString * const kCSServiceGDMapV3 = @"kCSServiceGDMapV3";
 
 @interface CSServiceFactory ()
 
@@ -53,7 +53,7 @@ NSString * const kCTServiceGDMapV3 = @"kCTServiceGDMapV3";
 #pragma mark - private methods
 - (CSService<CSServiceProtocol> *)newServiceWithIdentifier:(NSString *)identifier
 {
-    if ([identifier isEqualToString:kCTServiceGDMapV3]) {
+    if ([identifier isEqualToString:kCSServiceGDMapV3]) {
         return [[LDService alloc] init];
     }
     
