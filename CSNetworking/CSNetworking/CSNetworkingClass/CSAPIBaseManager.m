@@ -15,7 +15,7 @@
 #define CSCallAPI(REQUEST_METHOD, REQUEST_ID)                                                   \
 {                                                                                               \
 __weak typeof(self) weakSelf = self;                                                        \
-REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams domainName:self.child.domainName methodName:self.child.methodName success:^(CSURLResponse *response) { \
+REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams domainName:self.domainName methodName:self.methodName success:^(CSURLResponse *response) { \
 __strong typeof(weakSelf) strongSelf = weakSelf;                                        \
 [strongSelf successedOnCallingAPI:response];                                            \
 } fail:^(CSURLResponse *response) {                                                        \
@@ -62,13 +62,6 @@ NS_ASSUME_NONNULL_END
         
         _errorMessage = nil;
         _errorType = CSAPIManagerErrorTypeDefault;
-        
-        if ([self conformsToProtocol:@protocol(CSAPIManager)]) {
-            self.child = (id <CSAPIManager>)self;
-        } else {
-            NSException *exception = [[NSException alloc] init];
-            @throw exception;
-        }
     }
     return self;
 }
@@ -120,8 +113,8 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
-    NSString *domainName = self.child.domainName;
-    NSString *methodName = self.child.methodName;
+    NSString *domainName = self.domainName;
+    NSString *methodName = self.methodName;
     NSData *result = [self.cache fetchCachedDataWithDomainName:domainName methodName:methodName requestParams:params];
     
     if (result == nil) {
@@ -133,7 +126,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName domainName:self.child.domainName];
+        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName domainName:self.domainName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
@@ -141,7 +134,7 @@ NS_ASSUME_NONNULL_END
 
 - (void)loadDataFromNative
 {
-    NSString *methodName = self.child.methodName;
+    NSString *methodName = self.methodName;
     NSDictionary *result = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:methodName];
     
     if (result) {
@@ -173,7 +166,7 @@ NS_ASSUME_NONNULL_END
     if ([self shouldCallAPIWithParams:apiParams]) {
         if ([self.validator manager:self isCorrectWithParamsData:apiParams]) {
             
-            if ([self.child shouldLoadFromNative]) {
+            if ([self shouldLoadFromNative]) {
                 [self loadDataFromNative];
             }
             
@@ -185,7 +178,7 @@ NS_ASSUME_NONNULL_END
             // 实际的网络请求
             if ([self isReachable]) {
                 self.isLoading = YES;
-                switch (self.child.requestType)
+                switch (self.requestType)
                 {
                     case CSAPIManagerRequestTypeGet:
                         CSCallAPI(GET, requestId);
@@ -227,9 +220,9 @@ NS_ASSUME_NONNULL_END
     self.isLoading = NO;
     self.response = response;
     
-    if ([self.child shouldLoadFromNative]) {
+    if ([self shouldLoadFromNative]) {
         if (response.isCache == NO) {
-            [[NSUserDefaults standardUserDefaults] setObject:response.responseData forKey:[self.child methodName]];
+            [[NSUserDefaults standardUserDefaults] setObject:response.responseData forKey:[self methodName]];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
@@ -243,11 +236,11 @@ NS_ASSUME_NONNULL_END
     if ([self.validator manager:self isCorrectWithCallBackData:response.content]) {
         
         if ([self shouldCache] && !response.isCache) {
-            [self.cache saveCacheWithData:response.responseData domainName:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams cacheOutdateTimeSeconds:[self cacheOutdateTimeSeconds]];
+            [self.cache saveCacheWithData:response.responseData domainName:self.domainName methodName:self.methodName requestParams:response.requestParams cacheOutdateTimeSeconds:[self cacheOutdateTimeSeconds]];
         }
         
         if ([self beforePerformSuccessWithResponse:response]) {
-            if ([self.child shouldLoadFromNative]) {
+            if ([self shouldLoadFromNative]) {
                 if (response.isCache == YES) {
                     [self.delegate managerCallAPIDidSuccess:self];
                 }
@@ -320,7 +313,7 @@ NS_ASSUME_NONNULL_END
     BOOL result = YES;
     
     self.errorType = CSAPIManagerErrorTypeSuccess;
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager: beforePerformSuccessWithResponse:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager: beforePerformSuccessWithResponse:)]) {
         result = [self.interceptor manager:self beforePerformSuccessWithResponse:response];
     }
     return result;
@@ -328,7 +321,7 @@ NS_ASSUME_NONNULL_END
 
 - (void)afterPerformSuccessWithResponse:(CSURLResponse *)response
 {
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager:afterPerformSuccessWithResponse:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager:afterPerformSuccessWithResponse:)]) {
         [self.interceptor manager:self afterPerformSuccessWithResponse:response];
     }
 }
@@ -336,7 +329,7 @@ NS_ASSUME_NONNULL_END
 - (BOOL)beforePerformFailWithResponse:(CSURLResponse *)response
 {
     BOOL result = YES;
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager:beforePerformFailWithResponse:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager:beforePerformFailWithResponse:)]) {
         result = [self.interceptor manager:self beforePerformFailWithResponse:response];
     }
     return result;
@@ -344,7 +337,7 @@ NS_ASSUME_NONNULL_END
 
 - (void)afterPerformFailWithResponse:(CSURLResponse *)response
 {
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager:afterPerformFailWithResponse:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager:afterPerformFailWithResponse:)]) {
         [self.interceptor manager:self afterPerformFailWithResponse:response];
     }
 }
@@ -352,7 +345,7 @@ NS_ASSUME_NONNULL_END
 //只有返回YES才会继续调用API
 - (BOOL)shouldCallAPIWithParams:(NSDictionary *)params
 {
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager:shouldCallAPIWithParams:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager:shouldCallAPIWithParams:)]) {
         return [self.interceptor manager:self shouldCallAPIWithParams:params];
     } else {
         return YES;
@@ -361,12 +354,12 @@ NS_ASSUME_NONNULL_END
 
 - (void)afterCallingAPIWithParams:(NSDictionary *)params
 {
-    if (self != self.interceptor && [self.interceptor respondsToSelector:@selector(manager:afterCallingAPIWithParams:)]) {
+    if ([self.interceptor respondsToSelector:@selector(manager:afterCallingAPIWithParams:)]) {
         [self.interceptor manager:self afterCallingAPIWithParams:params];
     }
 }
 
-#pragma mark - method for child
+#pragma mark - CSAPIManager
 - (void)cleanData
 {
     [self.cache clean];
@@ -375,11 +368,26 @@ NS_ASSUME_NONNULL_END
     self.errorType = CSAPIManagerErrorTypeDefault;
 }
 
+- (NSString *)domainName
+{
+    return @"";
+}
+
+- (NSString *)methodName
+{
+    return @"";
+}
+
+- (CSAPIManagerRequestType)requestType
+{
+    return CSAPIManagerRequestTypeGet;
+}
+
 //如果需要在调用API之前额外添加一些参数，比如pageNumber和pageSize之类的就在这里添加
 //子类中覆盖这个函数的时候就不需要调用[super reformParams:params]了
 - (NSDictionary *)reformParams:(NSDictionary *)params
 {
-    IMP childIMP = [self.child methodForSelector:@selector(reformParams:)];
+    IMP childIMP = [self methodForSelector:@selector(reformParams:)];
     IMP selfIMP = [self methodForSelector:@selector(reformParams:)];
     
     if (childIMP == selfIMP) {
@@ -388,7 +396,7 @@ NS_ASSUME_NONNULL_END
         // 如果child是继承得来的，那么这里就不会跑到，会直接跑子类中的IMP。
         // 如果child是另一个对象，就会跑到这里
         NSDictionary *result = nil;
-        result = [self.child reformParams:params];
+        result = [self reformParams:params];
         if (result) {
             return result;
         } else {
