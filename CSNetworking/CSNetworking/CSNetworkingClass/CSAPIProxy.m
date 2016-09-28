@@ -116,16 +116,16 @@
                                 responseString:responseString
                                        request:request
                                          error:error];
-            CSURLResponse *CTResponse = [[CSURLResponse alloc] initWithResponseString:responseString requestId:requestID request:request responseData:responseData error:error];
-            fail?fail(CTResponse):nil;
+            CSURLResponse *CSResponse = [[CSURLResponse alloc] initWithResponseString:responseString requestId:requestID request:request responseData:responseData error:error];
+            fail?fail(CSResponse):nil;
         } else {
             // 检查http response是否成立。
             [CSLogger logDebugInfoWithResponse:httpResponse
                                 responseString:responseString
                                        request:request
                                          error:NULL];
-            CSURLResponse *CTResponse = [[CSURLResponse alloc] initWithResponseString:responseString requestId:requestID request:request responseData:responseData status:CSURLResponseStatusSuccess];
-            success?success(CTResponse):nil;
+            CSURLResponse *CSResponse = [[CSURLResponse alloc] initWithResponseString:responseString requestId:requestID request:request responseData:responseData status:CSURLResponseStatusSuccess];
+            success?success(CSResponse):nil;
         }
     }];
     

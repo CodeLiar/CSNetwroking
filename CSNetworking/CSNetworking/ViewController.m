@@ -23,7 +23,7 @@
 }
 
 - (IBAction)requestAction:(id)sender {
-    for (NSInteger i=0; i<1; i++) {
+    for (NSInteger i=0; i<10; i++) {
         [self.manager loadData];
     }
 }

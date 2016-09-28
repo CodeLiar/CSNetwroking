@@ -13,7 +13,6 @@
 
 @interface CSRequestGenerator ()
 
-@property (nonatomic, strong) AFHTTPRequestSerializer *httpRequestSerializer;
 
 @end
 
@@ -34,9 +33,11 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
-    [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithTimeoutInterval:20];
     
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"GET" URLString:urlString parameters:requestParams error:NULL];
+    [serializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"GET" URLString:urlString parameters:requestParams error:NULL];
     request.requestParams = requestParams;
     return request;
 }
@@ -45,9 +46,10 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
-    [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithTimeoutInterval:20];
+    [serializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"POST" URLString:urlString parameters:requestParams error:NULL];
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
     
     request.requestParams = requestParams;
@@ -58,9 +60,10 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
-    [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithTimeoutInterval:20];
+    [serializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"PUT" URLString:urlString parameters:requestParams error:NULL];
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"PUT" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
     request.requestParams = requestParams;
     return request;
@@ -70,23 +73,23 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", domainName, methodName];
     
-    [self.httpRequestSerializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithTimeoutInterval:20];
+    [serializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
     
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"DELETE" URLString:urlString parameters:requestParams error:NULL];
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"DELETE" URLString:urlString parameters:requestParams error:NULL];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:NULL];
     request.requestParams = requestParams;
     return request;
 }
 
-#pragma mark - getters and setters
-- (AFHTTPRequestSerializer *)httpRequestSerializer
+#pragma mark - private 
+
+- (AFHTTPRequestSerializer *)httpRequestSerializerWithTimeoutInterval:(NSTimeInterval)timeInterval
 {
-    if (_httpRequestSerializer == nil) {
-        _httpRequestSerializer = [AFHTTPRequestSerializer serializer];
-        _httpRequestSerializer.timeoutInterval = kCSNetworkingTimeoutSeconds;
-        _httpRequestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
-    }
-    return _httpRequestSerializer;
+    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+    serializer.timeoutInterval = timeInterval;
+    serializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    return serializer;
 }
 
 @end
