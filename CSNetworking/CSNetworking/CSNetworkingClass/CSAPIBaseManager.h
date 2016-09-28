@@ -365,6 +365,8 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 - (NSDictionary *)reformParams:(NSDictionary *)params;
 - (void)cleanData;
 - (BOOL)shouldCache;
+- (NSInteger)cacheCount;
+- (NSInteger)cacheOutdateTimeSeconds;
 
 - (void)successedOnCallingAPI:(CSURLResponse *)response;
 - (void)failedOnCallingAPI:(nullable CSURLResponse *)response withErrorType:(CSAPIManagerErrorType)errorType;

@@ -29,7 +29,7 @@
 - (BOOL)isOutdataed
 {
     NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.lastUpdateTime];
-    return timeInterval > kCSCacheOutdateTimeSeconds;
+    return timeInterval > self.cacheOutdateTimeSeconds;
 }
 
 - (void)setContent:(NSData *)content
@@ -41,11 +41,12 @@
 
 #pragma mark - life cycle
 
-- (instancetype)initWithContent:(NSData *)content
+- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
 {
     self = [super init];
     if (self) {
         self.content = content;
+        self.cacheOutdateTimeSeconds = cacheOutdateTimeSeconds;
     }
     return self;
 }
@@ -53,9 +54,10 @@
 
 #pragma mark - public method
 
-- (void)updateContent:(NSData *)content
+- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
 {
     self.content = content;
+    self.cacheOutdateTimeSeconds = cacheOutdateTimeSeconds;
 }
 
 @end

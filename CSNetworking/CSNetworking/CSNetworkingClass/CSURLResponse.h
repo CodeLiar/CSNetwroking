@@ -11,6 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, CSURLResponseStatus)
+{
+    CSURLResponseStatusSuccess, //作为底层，请求是否成功只考虑是否成功收到服务器反馈。至于签名是否正确，返回的数据是否完整，由上层的CSAPIBaseManager来决定。
+    CSURLResponseStatusErrorTimeout,
+    CSURLResponseStatusErrorNoNetwork // 默认除了超时以外的错误都是无网络错误。
+};
+
 @interface CSURLResponse : NSObject
 
 @property (nonatomic, assign, readonly) CSURLResponseStatus status;

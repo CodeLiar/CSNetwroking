@@ -14,12 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, readonly) NSData *content;
 @property (nonatomic, copy, readonly) NSDate *lastUpdateTime;
+@property (nonatomic, assign) NSInteger cacheOutdateTimeSeconds;
 
 @property (nonatomic, assign, readonly) BOOL isOutdataed;
 @property (nonatomic, assign, readonly) BOOL isEmpty;
 
-- (instancetype)initWithContent:(NSData *)content;
-- (void)updateContent:(NSData *)content;
+- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
+- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
 
 @end
 

@@ -9,6 +9,10 @@
 #import "CSUDIDGenerator.h"
 #import "CSNetworkingConfiguration.h"
 
+static NSString *CSKeychainServiceName = @"xxxxx";
+static NSString *CSUDIDName = @"xxxx";
+static NSString *CSPasteboardType = @"xxxx";
+
 @implementation CSUDIDGenerator
 
 + (id)sharedInstance

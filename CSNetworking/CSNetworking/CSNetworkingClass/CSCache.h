@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CSCache : NSObject
 
+
 + (instancetype)sharedInstance;
 
 - (NSString *)keyWithDomainName:(NSString *)domainName
@@ -25,16 +26,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)saveCacheWithData:(NSData *)cachedData
         domainName:(NSString *)domainName
                methodName:(NSString *)methodName
-            requestParams:(NSDictionary *)requestParams;
+            requestParams:(NSDictionary *)requestParams
+  cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
 
 - (void)deleteCacheWithDomainName:(NSString *)domainName
                               methodName:(NSString *)methodName
                            requestParams:(NSDictionary *)requestParams;
 
 - (nullable NSData *)fetchCachedDataWithKey:(NSString *)key;
-- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key;
+- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
 - (void)deleteCacheWithKey:(NSString *)key;
 - (void)clean;
+
+- (void)setCacheLimitCount:(NSInteger)count;
 
 @end
 

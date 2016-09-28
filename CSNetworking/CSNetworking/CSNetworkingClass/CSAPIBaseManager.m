@@ -243,7 +243,7 @@ NS_ASSUME_NONNULL_END
     if ([self.validator manager:self isCorrectWithCallBackData:response.content]) {
         
         if ([self shouldCache] && !response.isCache) {
-            [self.cache saveCacheWithData:response.responseData domainName:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams];
+            [self.cache saveCacheWithData:response.responseData domainName:self.child.domainName methodName:self.child.methodName requestParams:response.requestParams cacheOutdateTimeSeconds:[self cacheOutdateTimeSeconds]];
         }
         
         if ([self beforePerformSuccessWithResponse:response]) {
@@ -399,7 +399,17 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)shouldCache
 {
-    return kCSShouldCache;
+    return NO;
+}
+
+- (NSInteger)cacheCount
+{
+    return 1000;
+}
+
+- (NSInteger)cacheOutdateTimeSeconds
+{
+    return 60*60*12;
 }
 
 
@@ -408,6 +418,7 @@ NS_ASSUME_NONNULL_END
 {
     if (_cache == nil) {
         _cache = [CSCache sharedInstance];
+        [_cache setCacheLimitCount:[self cacheCount]];
     }
     return _cache;
 }
