@@ -8,7 +8,6 @@
 
 #import "CSCache.h"
 #import "NSDictionary+CSNetworkingMethods.h"
-#import "CSNetworkingConfiguration.h"
 #import "CSCachedObject.h"
 
 @interface CSCache ()
@@ -54,7 +53,7 @@
     return [self fetchCachedDataWithKey:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
 }
 
-- (void)saveCacheWithData:(NSData *)cachedData domainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
+- (void)saveCacheWithData:(NSData *)cachedData domainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds
 {
     [self saveCacheWithData:cachedData key:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams] cacheOutdateTimeSeconds:cacheOutdateTimeSeconds];
 }
@@ -74,7 +73,7 @@
     }
 }
 
-- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
+- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds
 {
     CSCachedObject *cachedObject = [self.cache objectForKey:key];
     if (cachedObject == nil) {

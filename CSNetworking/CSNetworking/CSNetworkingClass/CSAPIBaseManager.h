@@ -256,6 +256,7 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 @required
 - (NSString *)methodName;
 - (NSString *)domainName;
+- (NSTimeInterval)timeInterval;
 - (CSAPIManagerRequestType)requestType;
 - (BOOL)shouldCache;
 
@@ -265,12 +266,14 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 
 /*
  if shouldCache return YES, cacheCount is required 
+ default 1000k
  */
 - (NSInteger)cacheCount;
 /*
  if shouldCache return YES, cacheOutdateTimeSeconds is required 
+ default 1 day
  */
-- (NSInteger)cacheOutdateTimeSeconds;
+- (NSTimeInterval)cacheOutdateTimeSeconds;
 
 - (void)cleanData;
 - (NSDictionary *)reformParams:(NSDictionary *)params;

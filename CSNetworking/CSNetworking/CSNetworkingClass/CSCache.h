@@ -27,14 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
         domainName:(NSString *)domainName
                methodName:(NSString *)methodName
             requestParams:(NSDictionary *)requestParams
-  cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
+  cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;
 
 - (void)deleteCacheWithDomainName:(NSString *)domainName
                               methodName:(NSString *)methodName
                            requestParams:(NSDictionary *)requestParams;
 
 - (nullable NSData *)fetchCachedDataWithKey:(NSString *)key;
-- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
+- (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;
 - (void)deleteCacheWithKey:(NSString *)key;
 - (void)clean;
 

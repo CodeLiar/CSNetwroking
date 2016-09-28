@@ -7,7 +7,6 @@
 //
 
 #import "CSCachedObject.h"
-#import "CSNetworkingConfiguration.h"
 
 @interface CSCachedObject ()
 
@@ -41,7 +40,7 @@
 
 #pragma mark - life cycle
 
-- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
+- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds
 {
     self = [super init];
     if (self) {
@@ -54,7 +53,7 @@
 
 #pragma mark - public method
 
-- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds
+- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds
 {
     self.content = content;
     self.cacheOutdateTimeSeconds = cacheOutdateTimeSeconds;

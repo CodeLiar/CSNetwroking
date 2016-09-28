@@ -12,19 +12,6 @@
 #import "CSLogger.h"
 #import <AFNetworkReachabilityManager.h>
 
-#define CSCallAPI(REQUEST_METHOD, REQUEST_ID)                                                   \
-{                                                                                               \
-__weak typeof(self) weakSelf = self;                                                        \
-REQUEST_ID = [[CSAPIProxy sharedInstance] call##REQUEST_METHOD##WithParams:apiParams domainName:self.domainName methodName:self.methodName success:^(CSURLResponse *response) { \
-__strong typeof(weakSelf) strongSelf = weakSelf;                                        \
-[strongSelf successedOnCallingAPI:response];                                            \
-} fail:^(CSURLResponse *response) {                                                        \
-__strong typeof(weakSelf) strongSelf = weakSelf;                                        \
-[strongSelf failedOnCallingAPI:response withErrorType:CSAPIManagerErrorTypeDefault];    \
-}];                                                                                         \
-[self.requestIdList addObject:@(REQUEST_ID)];                                               \
-}
-
 NSString * const kCSUserTokenInvalidNotification = @"kCSUserTokenInvalidNotification";
 NSString * const kCSUserTokenIllegalNotification = @"kCSUserTokenIllegalNotification";
 
@@ -70,6 +57,7 @@ NS_ASSUME_NONNULL_END
 {
     [self cancelAllRequests];
     self.requestIdList = nil;
+    NSLog(@"%s", __FUNCTION__);
 }
 
 #pragma mark - public method
@@ -178,24 +166,15 @@ NS_ASSUME_NONNULL_END
             // 实际的网络请求
             if ([self isReachable]) {
                 self.isLoading = YES;
-                switch (self.requestType)
-                {
-                    case CSAPIManagerRequestTypeGet:
-                        CSCallAPI(GET, requestId);
-                        break;
-                    case CSAPIManagerRequestTypePost:
-                        CSCallAPI(POST, requestId);
-                        break;
-                    case CSAPIManagerRequestTypePut:
-                        CSCallAPI(PUT, requestId);
-                        break;
-                    case CSAPIManagerRequestTypeDelete:
-                        CSCallAPI(DELETE, requestId);
-                        break;
-                    default:
-                        break;
-                }
-                
+                typeof(self) weakSelf = self;
+                requestId = [[CSAPIProxy sharedInstance] callAPIWithManager:self params:apiParams success:^(CSURLResponse * _Nonnull response) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;                                        \
+                    [strongSelf successedOnCallingAPI:response];
+                } fail:^(CSURLResponse * _Nonnull response) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;                                        \
+                    [strongSelf failedOnCallingAPI:response withErrorType:CSAPIManagerErrorTypeDefault];
+                }];
+                [self.requestIdList addObject:@(requestId)];
                 NSMutableDictionary *params = [apiParams mutableCopy];
                 params[kCSAPIBaseManagerRequestID] = @(requestId);
                 [self afterCallingAPIWithParams:params];
@@ -261,6 +240,7 @@ NS_ASSUME_NONNULL_END
 {
     self.isLoading = NO;
     self.response = response;
+    self.fetchedRawData = nil;
     if ([response.content[@"id"] isEqualToString:@"expired_access_token"]) {
         // token 失效
         [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenInvalidNotification
@@ -378,6 +358,11 @@ NS_ASSUME_NONNULL_END
     return @"";
 }
 
+- (NSTimeInterval)timeInterval
+{
+    return 20;
+}
+
 - (CSAPIManagerRequestType)requestType
 {
     return CSAPIManagerRequestTypeGet;
@@ -415,7 +400,7 @@ NS_ASSUME_NONNULL_END
     return 1000;
 }
 
-- (NSInteger)cacheOutdateTimeSeconds
+- (NSTimeInterval)cacheOutdateTimeSeconds
 {
     return 60*60*12;
 }

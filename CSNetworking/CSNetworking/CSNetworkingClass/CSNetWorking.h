@@ -11,6 +11,5 @@
 
 #import "CSAPIProxy.h"
 #import "CSAPIBaseManager.h"
-#import "CSNetWorkingConfiguration.h"
 
 #endif /* CSNetWorking_h */

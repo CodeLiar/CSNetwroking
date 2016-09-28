@@ -7,7 +7,6 @@
 //
 
 #import "CSUDIDGenerator.h"
-#import "CSNetworkingConfiguration.h"
 
 static NSString *CSKeychainServiceName = @"xxxxx";
 static NSString *CSUDIDName = @"xxxx";

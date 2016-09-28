@@ -19,8 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL isOutdataed;
 @property (nonatomic, assign, readonly) BOOL isEmpty;
 
-- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
-- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSInteger)cacheOutdateTimeSeconds;
+- (instancetype)initWithContent:(NSData *)content cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;
+- (void)updateContent:(NSData *)content cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;
 
 @end
 

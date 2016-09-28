@@ -11,8 +11,6 @@
 
 @interface ViewController () <CSAPIManagerCallBackDelegate, CSAPIManagerParamSource>
 
-@property (nonatomic, strong) TestAPIManager *manager;
-
 @end
 
 @implementation ViewController
@@ -23,8 +21,11 @@
 }
 
 - (IBAction)requestAction:(id)sender {
-    for (NSInteger i=0; i<10; i++) {
-        [self.manager loadData];
+    for (NSInteger i=0; i<1; i++) {
+        TestAPIManager *manager = [[TestAPIManager alloc] init];
+        manager.delegate = self;
+        manager.paramSource = self;
+        [manager loadData];
     }
 }
 
@@ -47,16 +48,6 @@
 {
     NSLog(@"%s", __FUNCTION__);
     NSLog(@"%@", [manager fetchDataWithReformer:nil]);
-}
-
-- (TestAPIManager *)manager
-{
-    if (!_manager) {
-        _manager = [[TestAPIManager alloc] init];
-        _manager.delegate = self;
-        _manager.paramSource = self;
-    }
-    return _manager;
 }
 
 @end

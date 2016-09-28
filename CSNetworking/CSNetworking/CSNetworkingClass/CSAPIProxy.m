@@ -8,8 +8,9 @@
 
 #import "CSAPIProxy.h"
 #import <AFNetworking.h>
-#import "CSRequestGenerator.h"
 #import "CSLogger.h"
+#import "CSAPIBaseManager.h"
+#import "NSURLRequest+CSNetworkingMethods.h"
 
 @interface CSAPIProxy ()
 
@@ -54,30 +55,10 @@
 }
 
 #pragma mark - public methods
-- (NSInteger)callGETWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
-{
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateGETRequestWithDomainName:domainName requestParams:params methodName:methodName];
-    NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
-    return [requestId integerValue];
-}
 
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
+- (NSInteger)callAPIWithManager:(CSAPIBaseManager *)manager params:(NSDictionary *)params success:(CSCallback)success fail:(CSCallback)fail
 {
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePOSTRequestWithDomainName:domainName requestParams:params methodName:methodName];
-    NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
-    return [requestId integerValue];
-}
-
-- (NSInteger)callPUTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
-{
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generatePutRequestWithDomainName:domainName requestParams:params methodName:methodName];
-    NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
-    return [requestId integerValue];
-}
-
-- (NSInteger)callDELETEWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail
-{
-    NSURLRequest *request = [[CSRequestGenerator sharedInstance] generateDeleteRequestWithDomainName:domainName requestParams:params methodName:methodName];
+    NSURLRequest *request = [self generateRequestWithAPIManager:manager params:params];
     NSNumber *requestId = [self callAPIWithRequest:request success:success fail:fail];
     return [requestId integerValue];
 }
@@ -94,6 +75,42 @@
     for (NSNumber *requestId in requestIDList) {
         [self cancelRequestWithRequestID:requestId];
     }
+}
+                             
+- (NSURLRequest *)generateRequestWithAPIManager:(CSAPIBaseManager *)manager params:(NSDictionary *)params
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", manager.domainName, manager.methodName];
+    
+    AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithAPIManager:manager];
+    
+    NSMutableURLRequest *request = nil;
+    switch (manager.requestType) {
+        case CSAPIManagerRequestTypeGet:
+            request = [serializer requestWithMethod:@"GET" URLString:urlString parameters:params error:NULL];
+            request.requestParams = params;
+            break;
+        case CSAPIManagerRequestTypePost:
+            request = [serializer requestWithMethod:@"POST" URLString:urlString parameters:params error:NULL];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:NULL];
+            request.requestParams = params;
+            break;
+        case CSAPIManagerRequestTypePut:
+            request = [serializer requestWithMethod:@"PUT" URLString:urlString parameters:params error:NULL];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:NULL];
+            request.requestParams = params;
+            break;
+        case CSAPIManagerRequestTypeDelete:
+            request = [serializer requestWithMethod:@"DELETE" URLString:urlString parameters:params error:NULL];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:NULL];
+            request.requestParams = params;
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    return request;
 }
 
 /** 这个函数存在的意义在于，如果将来要把AFNetworking换掉，只要修改这个函数的实现即可。 */
@@ -135,6 +152,17 @@
     [dataTask resume];
     
     return requestId;
+}
+
+#pragma mark - private
+
+- (AFHTTPRequestSerializer *)httpRequestSerializerWithAPIManager:(CSAPIBaseManager *)manager
+{
+    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+    serializer.timeoutInterval = manager.timeInterval;
+    serializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    [serializer setValue:[[NSUUID UUID] UUIDString] forHTTPHeaderField:@"xxxxxxxx"];
+    return serializer;
 }
 
 @end

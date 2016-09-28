@@ -33,7 +33,12 @@
 
 - (BOOL)shouldCache
 {
-    return NO;
+    return YES;
+}
+
+- (NSTimeInterval)cacheOutdateTimeSeconds
+{
+    return 10;
 }
 
 - (CSAPIManagerRequestType)requestType

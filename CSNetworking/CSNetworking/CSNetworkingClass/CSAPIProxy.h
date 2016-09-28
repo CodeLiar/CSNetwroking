@@ -12,17 +12,15 @@
 NS_ASSUME_NONNULL_BEGIN
 typedef void(^CSCallback)(CSURLResponse *response);
 
+@class CSAPIBaseManager;
 @interface CSAPIProxy : NSObject
 
 + (instancetype)sharedInstance;
 
-- (NSInteger)callGETWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callPUTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callDELETEWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-
-
+- (NSInteger)callAPIWithManager:(CSAPIBaseManager *)manager params:(NSDictionary *)params success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
 - (NSNumber *)callAPIWithRequest:(NSURLRequest *)request success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
+- (NSURLRequest *)generateRequestWithAPIManager:(CSAPIBaseManager *)manager params:(NSDictionary *)params;
+
 - (void)cancelRequestWithRequestID:(NSNumber *)requestID;
 - (void)cancelRequestWithRequestIDList:(NSArray *)requestIDList;
 

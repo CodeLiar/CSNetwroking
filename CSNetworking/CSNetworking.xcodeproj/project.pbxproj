@@ -31,7 +31,6 @@
 		AE9BDA741D99052900B482A6 /* NSString+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA731D99052900B482A6 /* NSString+CSNetworkingMethods.m */; };
 		AE9BDA771D9911DA00B482A6 /* CSUDIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */; };
 		AE9BDA7B1D99184C00B482A6 /* CSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA7A1D99184C00B482A6 /* CSLocationManager.m */; };
-		AE9BDA7E1D991BE700B482A6 /* CSRequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA7D1D991BE700B482A6 /* CSRequestGenerator.m */; };
 		AE9BDA811D991CCA00B482A6 /* CSSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */; };
 		AE9BDA841D99227600B482A6 /* CSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA831D99227600B482A6 /* CSLogger.m */; };
 		AE9BDA8A1D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA891D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.m */; };
@@ -87,7 +86,6 @@
 		AE9BDA441D98CB5B00B482A6 /* CSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCache.m; sourceTree = "<group>"; };
 		AE9BDA461D98CB7400B482A6 /* CSCachedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCachedObject.h; sourceTree = "<group>"; };
 		AE9BDA471D98CB7400B482A6 /* CSCachedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCachedObject.m; sourceTree = "<group>"; };
-		AE9BDA491D98CE3100B482A6 /* CSNetworkingConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSNetworkingConfiguration.h; sourceTree = "<group>"; };
 		AE9BDA4E1D98D1C400B482A6 /* NSDictionary+CSNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+CSNetworkingMethods.h"; sourceTree = "<group>"; };
 		AE9BDA4F1D98D1C400B482A6 /* NSDictionary+CSNetworkingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+CSNetworkingMethods.m"; sourceTree = "<group>"; };
 		AE9BDA511D98D22500B482A6 /* NSArray+CSNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CSNetworkingMethods.h"; sourceTree = "<group>"; };
@@ -108,8 +106,6 @@
 		AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSUDIDGenerator.m; sourceTree = "<group>"; };
 		AE9BDA791D99184C00B482A6 /* CSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLocationManager.h; sourceTree = "<group>"; };
 		AE9BDA7A1D99184C00B482A6 /* CSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLocationManager.m; sourceTree = "<group>"; };
-		AE9BDA7C1D991BE700B482A6 /* CSRequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRequestGenerator.h; sourceTree = "<group>"; };
-		AE9BDA7D1D991BE700B482A6 /* CSRequestGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRequestGenerator.m; sourceTree = "<group>"; };
 		AE9BDA7F1D991CCA00B482A6 /* CSSignatureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSignatureGenerator.h; sourceTree = "<group>"; };
 		AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSignatureGenerator.m; sourceTree = "<group>"; };
 		AE9BDA821D99227600B482A6 /* CSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLogger.h; sourceTree = "<group>"; };
@@ -246,8 +242,6 @@
 				AE9BDA831D99227600B482A6 /* CSLogger.m */,
 				AE9BDA8B1D99273400B482A6 /* CSCommonParamsGenerator.h */,
 				AE9BDA8C1D99273400B482A6 /* CSCommonParamsGenerator.m */,
-				AE9BDA7C1D991BE700B482A6 /* CSRequestGenerator.h */,
-				AE9BDA7D1D991BE700B482A6 /* CSRequestGenerator.m */,
 				AE9BDA7F1D991CCA00B482A6 /* CSSignatureGenerator.h */,
 				AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */,
 				AE9BDA751D9911DA00B482A6 /* CSUDIDGenerator.h */,
@@ -258,7 +252,6 @@
 				AE9BDA441D98CB5B00B482A6 /* CSCache.m */,
 				AE9BDA461D98CB7400B482A6 /* CSCachedObject.h */,
 				AE9BDA471D98CB7400B482A6 /* CSCachedObject.m */,
-				AE9BDA491D98CE3100B482A6 /* CSNetworkingConfiguration.h */,
 			);
 			path = CSNetworkingClass;
 			sourceTree = "<group>";
@@ -570,7 +563,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE9BDA7E1D991BE700B482A6 /* CSRequestGenerator.m in Sources */,
 				AE9BDA591D98F1F100B482A6 /* CSURLResponse.m in Sources */,
 				AE9BDA111D952F2D00B482A6 /* ViewController.m in Sources */,
 				AE9BDA5F1D98F3F600B482A6 /* NSObject+CSNetworkingMethods.m in Sources */,
