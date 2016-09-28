@@ -101,9 +101,7 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
-    NSString *domainName = self.domainName;
-    NSString *methodName = self.methodName;
-    NSData *result = [self.cache fetchCachedDataWithDomainName:domainName methodName:methodName requestParams:params];
+    NSData *result = [self.cache fetchCachedDataWithAPIManager:self requestParams:params];
     
     if (result == nil) {
         return NO;
@@ -114,7 +112,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:methodName domainName:self.domainName];
+        [CSLogger logDebugInfoWithCachedResponse:response methodName:weakSelf.methodName domainName:self.domainName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
@@ -215,7 +213,7 @@ NS_ASSUME_NONNULL_END
     if ([self.validator manager:self isCorrectWithCallBackData:response.content]) {
         
         if ([self shouldCache] && !response.isCache) {
-            [self.cache saveCacheWithData:response.responseData domainName:self.domainName methodName:self.methodName requestParams:response.requestParams cacheOutdateTimeSeconds:[self cacheOutdateTimeSeconds]];
+            [self.cache saveCacheWithData:response.responseData APIManager:self requestParams:response.requestParams];
         }
         
         if ([self beforePerformSuccessWithResponse:response]) {

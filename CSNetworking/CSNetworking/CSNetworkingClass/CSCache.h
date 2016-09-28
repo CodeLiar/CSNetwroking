@@ -10,28 +10,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class CSAPIBaseManager;
 @interface CSCache : NSObject
 
 
 + (instancetype)sharedInstance;
 
-- (NSString *)keyWithDomainName:(NSString *)domainName
-                            methodName:(NSString *)methodName
-                         requestParams:(NSDictionary *)requestParams;
+- (NSString *)keyWithAPIManager:(CSAPIBaseManager *)manager
+                  requestParams:(NSDictionary *)requestParams;
 
-- (nullable NSData *)fetchCachedDataWithDomainName:(NSString *)domainName
-                                      methodName:(NSString *)methodName
-                                   requestParams:(NSDictionary *)requestParams;
+- (nullable NSData *)fetchCachedDataWithAPIManager:(CSAPIBaseManager *)manager
+                                     requestParams:(NSDictionary *)requestParams;
 
 - (void)saveCacheWithData:(NSData *)cachedData
-        domainName:(NSString *)domainName
-               methodName:(NSString *)methodName
-            requestParams:(NSDictionary *)requestParams
-  cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;
+               APIManager:(CSAPIBaseManager *)manager
+            requestParams:(NSDictionary *)requestParams;
 
-- (void)deleteCacheWithDomainName:(NSString *)domainName
-                              methodName:(NSString *)methodName
-                           requestParams:(NSDictionary *)requestParams;
+- (void)deleteCacheWithAPIManager:(CSAPIBaseManager *)manager
+                    requestParams:(NSDictionary *)requestParams;
 
 - (nullable NSData *)fetchCachedDataWithKey:(NSString *)key;
 - (void)saveCacheWithData:(NSData *)cachedData key:(NSString *)key cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds;

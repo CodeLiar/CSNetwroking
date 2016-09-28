@@ -9,6 +9,7 @@
 #import "CSCache.h"
 #import "NSDictionary+CSNetworkingMethods.h"
 #import "CSCachedObject.h"
+#import "CSAPIBaseManager.h"
 
 @interface CSCache ()
 
@@ -43,24 +44,24 @@
 
 #pragma mark - public method
 
-- (NSString *)keyWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (NSString *)keyWithAPIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams
 {
-    return [NSString stringWithFormat:@"%@%@%@", domainName, methodName, [requestParams CS_urlParamsStringSignature:NO]];
+    return [NSString stringWithFormat:@"%@%@%@", manager.domainName, manager.methodName, [requestParams CS_urlParamsStringSignature:NO]];
 }
 
-- (nullable NSData *)fetchCachedDataWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (NSData *)fetchCachedDataWithAPIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams
 {
-    return [self fetchCachedDataWithKey:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
+    return [self fetchCachedDataWithKey:[self keyWithAPIManager:manager requestParams:requestParams]];
 }
 
-- (void)saveCacheWithData:(NSData *)cachedData domainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams cacheOutdateTimeSeconds:(NSTimeInterval)cacheOutdateTimeSeconds
+- (void)saveCacheWithData:(NSData *)cachedData APIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams
 {
-    [self saveCacheWithData:cachedData key:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams] cacheOutdateTimeSeconds:cacheOutdateTimeSeconds];
+    [self saveCacheWithData:cachedData key:[self keyWithAPIManager:manager requestParams:requestParams] cacheOutdateTimeSeconds:manager.cacheOutdateTimeSeconds];
 }
 
-- (void)deleteCacheWithDomainName:(NSString *)domainName methodName:(NSString *)methodName requestParams:(NSDictionary *)requestParams
+- (void)deleteCacheWithAPIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams
 {
-    [self deleteCacheWithKey:[self keyWithDomainName:domainName methodName:methodName requestParams:requestParams]];
+    [self deleteCacheWithKey:[self keyWithAPIManager:manager requestParams:requestParams]];
 }
 
 - (nullable NSData *)fetchCachedDataWithKey:(NSString *)key

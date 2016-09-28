@@ -15,7 +15,6 @@
 @interface CSAPIProxy ()
 
 @property (nonatomic, strong) NSMutableDictionary *dispatchTable;
-@property (nonatomic, strong) NSNumber *recordedRequestId;
 
 //AFNetworking stuff
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
