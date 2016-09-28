@@ -16,10 +16,10 @@ typedef void(^CSCallback)(CSURLResponse *response);
 
 + (instancetype)sharedInstance;
 
-- (NSInteger)callGETWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callPUTWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
-- (NSInteger)callDELETEWithParams:(NSDictionary *)params domainName:(NSString *)servieIdentifier methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
+- (NSInteger)callGETWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
+- (NSInteger)callPOSTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
+- (NSInteger)callPUTWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
+- (NSInteger)callDELETEWithParams:(NSDictionary *)params domainName:(NSString *)domainName methodName:(NSString *)methodName success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
 
 
 - (NSNumber *)callAPIWithRequest:(NSURLRequest *)request success:(nullable CSCallback)success fail:(nullable CSCallback)fail;
