@@ -11,6 +11,6 @@
 
 
 
-static NSTimeInterval kCSNetworkingTimeoutSeconds = 20.0f;
+static NSTimeInterval kCSNetworkingTimeoutSeconds = 0.2f;
 
 #endif /* CSNetworkingConfiguration_h */
