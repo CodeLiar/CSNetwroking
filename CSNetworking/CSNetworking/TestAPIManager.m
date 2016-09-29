@@ -21,14 +21,19 @@
 
 #pragma mark - CSAPIManager
 
-- (NSString *)methodName
+- (NSString *)pathName
 {
-    return @"v3/geocode/regeo";
+    return @"/v3/geocode/regeo";
 }
 
-- (NSString *)domainName
+- (NSString *)hostName
 {
-    return @"http://restapi.amap.com";
+    return @"restapi.amap.com";
+}
+
+- (NSString *)schemeName
+{
+    return @"http";
 }
 
 - (BOOL)shouldCache

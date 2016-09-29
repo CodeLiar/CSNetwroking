@@ -22,15 +22,17 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  总述：
  这个base manager是用于给外部访问API的时候做的一个基类。任何继承这个基类的manager都要添加两个getter方法：
  
- - (NSString *)methodName
+ - (NSString *)pathName
  {
  return @"community/searchMap";
  }
  
- - (RTdomainName)domainName
+ - (NSString *)hostName
  {
- return RTcasatwyServiceID;
+ return @"www.baidu.com";
  }
+ 
+ -
  
  外界在使用manager的时候，如果需要调api，只要调用loadData即可。manager会去找paramSource来获得调用api的参数。调用成功或失败，则会调用delegate的回调函数。
  
@@ -254,8 +256,9 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 @protocol CSAPIManager <NSObject>
 
 @required
-- (NSString *)methodName;
-- (NSString *)domainName;
+- (NSString *)schemeName;
+- (NSString *)pathName;
+- (NSString *)hostName;
 - (NSTimeInterval)timeInterval;
 - (CSAPIManagerRequestType)requestType;
 - (BOOL)shouldCache;

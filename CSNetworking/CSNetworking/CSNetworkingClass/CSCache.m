@@ -46,7 +46,7 @@
 
 - (NSString *)keyWithAPIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams
 {
-    return [NSString stringWithFormat:@"%@%@%@", manager.domainName, manager.methodName, [requestParams CS_urlParamsStringSignature:NO]];
+    return [NSString stringWithFormat:@"%@://%@%@%@", manager.schemeName, manager.hostName, manager.pathName, [requestParams CS_urlParamsStringSignature:NO]];
 }
 
 - (NSData *)fetchCachedDataWithAPIManager:(CSAPIBaseManager *)manager requestParams:(NSDictionary *)requestParams

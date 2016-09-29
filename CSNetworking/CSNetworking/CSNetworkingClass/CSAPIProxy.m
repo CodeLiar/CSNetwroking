@@ -78,7 +78,7 @@
                              
 - (NSURLRequest *)generateRequestWithAPIManager:(CSAPIBaseManager *)manager params:(NSDictionary *)params
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", manager.domainName, manager.methodName];
+    NSString *urlString = [NSString stringWithFormat:@"%@://%@%@", manager.schemeName, manager.hostName, manager.pathName];
     
     AFHTTPRequestSerializer *serializer = [self httpRequestSerializerWithAPIManager:manager];
     

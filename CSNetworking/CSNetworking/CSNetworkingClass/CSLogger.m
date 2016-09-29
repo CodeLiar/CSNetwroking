@@ -48,14 +48,14 @@
 #endif
 }
 
-+ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response methodName:(NSString *)methodName domainName:(NSString *)service
++ (void)logDebugInfoWithCachedResponse:(CSURLResponse *)response pathName:(NSString *)pathName hostName:(NSString *)hostName schemeName:(NSString *)schemeName
 {
 #ifdef DEBUG
     NSMutableString *logString = [NSMutableString stringWithString:@"\n\n==============================================================\n=                      Cached Response                       =\n==============================================================\n\n"];
     
-    [logString appendFormat:@"API Name:\t\t%@/%@\n", service, [methodName CS_defaultValue:@"N/A"]];
-    [logString appendFormat:@"Domain Name:\t%@\n", service];
-    [logString appendFormat:@"Method Name:\t%@\n", methodName];
+    [logString appendFormat:@"API Name:\t\t%@://%@%@\n", schemeName, hostName, [pathName CS_defaultValue:@"N/A"]];
+    [logString appendFormat:@"Domain Name:\t%@://%@\n", schemeName, hostName];
+    [logString appendFormat:@"Method Name:\t%@\n", pathName];
     [logString appendFormat:@"Params:\n%@\n\n", response.requestParams];
     [logString appendFormat:@"Content:\n\t%@\n\n", response.contentString];
     

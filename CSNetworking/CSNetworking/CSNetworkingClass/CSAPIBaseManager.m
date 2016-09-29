@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:strongSelf.methodName domainName:self.domainName];
+        [CSLogger logDebugInfoWithCachedResponse:response pathName:strongSelf.pathName hostName:strongSelf.hostName schemeName: strongSelf.schemeName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
@@ -120,8 +120,8 @@ NS_ASSUME_NONNULL_END
 
 - (void)loadDataFromNative
 {
-    NSString *methodName = self.methodName;
-    NSDictionary *result = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:methodName];
+    NSString *pathName = self.pathName;
+    NSDictionary *result = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:pathName];
     
     if (result) {
         self.isNativeDataEmpty = NO;
@@ -199,7 +199,7 @@ NS_ASSUME_NONNULL_END
     
     if ([self shouldLoadFromNative]) {
         if (response.isCache == NO) {
-            [[NSUserDefaults standardUserDefaults] setObject:response.responseData forKey:[self methodName]];
+            [[NSUserDefaults standardUserDefaults] setObject:response.responseData forKey:[self pathName]];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
@@ -346,12 +346,17 @@ NS_ASSUME_NONNULL_END
     self.errorType = CSAPIManagerErrorTypeDefault;
 }
 
-- (NSString *)domainName
+- (NSString *)schemeName
 {
     return @"";
 }
 
-- (NSString *)methodName
+- (NSString *)hostName
+{
+    return @"";
+}
+
+- (NSString *)pathName
 {
     return @"";
 }

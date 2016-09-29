@@ -31,7 +31,6 @@
 		AE9BDA741D99052900B482A6 /* NSString+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA731D99052900B482A6 /* NSString+CSNetworkingMethods.m */; };
 		AE9BDA771D9911DA00B482A6 /* CSUDIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */; };
 		AE9BDA7B1D99184C00B482A6 /* CSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA7A1D99184C00B482A6 /* CSLocationManager.m */; };
-		AE9BDA811D991CCA00B482A6 /* CSSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */; };
 		AE9BDA841D99227600B482A6 /* CSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA831D99227600B482A6 /* CSLogger.m */; };
 		AE9BDA8A1D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA891D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.m */; };
 		AE9BDA8D1D99273400B482A6 /* CSCommonParamsGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9BDA8C1D99273400B482A6 /* CSCommonParamsGenerator.m */; };
@@ -106,8 +105,6 @@
 		AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSUDIDGenerator.m; sourceTree = "<group>"; };
 		AE9BDA791D99184C00B482A6 /* CSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLocationManager.h; sourceTree = "<group>"; };
 		AE9BDA7A1D99184C00B482A6 /* CSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLocationManager.m; sourceTree = "<group>"; };
-		AE9BDA7F1D991CCA00B482A6 /* CSSignatureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSignatureGenerator.h; sourceTree = "<group>"; };
-		AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSignatureGenerator.m; sourceTree = "<group>"; };
 		AE9BDA821D99227600B482A6 /* CSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLogger.h; sourceTree = "<group>"; };
 		AE9BDA831D99227600B482A6 /* CSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLogger.m; sourceTree = "<group>"; };
 		AE9BDA881D9924AA00B482A6 /* NSMutableString+CSNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+CSNetworkingMethods.h"; sourceTree = "<group>"; };
@@ -242,8 +239,6 @@
 				AE9BDA831D99227600B482A6 /* CSLogger.m */,
 				AE9BDA8B1D99273400B482A6 /* CSCommonParamsGenerator.h */,
 				AE9BDA8C1D99273400B482A6 /* CSCommonParamsGenerator.m */,
-				AE9BDA7F1D991CCA00B482A6 /* CSSignatureGenerator.h */,
-				AE9BDA801D991CCA00B482A6 /* CSSignatureGenerator.m */,
 				AE9BDA751D9911DA00B482A6 /* CSUDIDGenerator.h */,
 				AE9BDA761D9911DA00B482A6 /* CSUDIDGenerator.m */,
 				AE9BDA571D98F1F100B482A6 /* CSURLResponse.h */,
@@ -583,7 +578,6 @@
 				AE9BDA3F1D95301100B482A6 /* CSAPIBaseManager.m in Sources */,
 				AE9BDA841D99227600B482A6 /* CSLogger.m in Sources */,
 				AE9BDA451D98CB5B00B482A6 /* CSCache.m in Sources */,
-				AE9BDA811D991CCA00B482A6 /* CSSignatureGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
