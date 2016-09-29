@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response methodName:weakSelf.methodName domainName:self.domainName];
+        [CSLogger logDebugInfoWithCachedResponse:response methodName:strongSelf.methodName domainName:self.domainName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;

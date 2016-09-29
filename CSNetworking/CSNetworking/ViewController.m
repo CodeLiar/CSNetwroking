@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "TestAPIManager.h"
+#import <OHHTTPStubs.h>
+
 
 @interface ViewController () <CSAPIManagerCallBackDelegate, CSAPIManagerParamSource>
 
@@ -18,6 +20,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    [self installStubs];
+}
+
+- (void)installStubs
+{
+//    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
+//        return [request.URL.path isEqualToString:@"/v3/geocode/regeo"];
+//    } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
+//        return [OHHTTPStubsResponse respon]
+//    }]
 }
 
 - (IBAction)requestAction:(id)sender {

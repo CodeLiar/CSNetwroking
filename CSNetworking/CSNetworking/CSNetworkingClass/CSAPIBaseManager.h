@@ -24,7 +24,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  
  - (NSString *)methodName
  {
- return @"community.searchMap";
+ return @"community/searchMap";
  }
  
  - (RTdomainName)domainName
