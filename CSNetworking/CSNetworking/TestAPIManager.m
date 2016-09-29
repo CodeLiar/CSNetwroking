@@ -59,7 +59,6 @@
 //    NSDictionary *dic = @{@"key": @"value"};
     __weak typeof(self) weakSelf = self;
     
-    NSError *error = [NSError errorWithDomain:NSURLErrorFailingURLErrorKey code:-100000 userInfo:nil];
     [self addAPIStubWithTag:@"demo" responseData:@"success" statusCode:200 requestTime:3 responseTime:3 condition:^BOOL(NSURLRequest * _Nonnull request) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         return [request.URL.path isEqualToString:strongSelf.pathName];
