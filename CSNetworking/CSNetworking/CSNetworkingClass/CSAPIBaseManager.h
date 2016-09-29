@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSURLRequest+CSNetworkingMethods.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -132,7 +133,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  即便如此，同一类业务逻辑（都是获取电话号码）还是应该写到一个reformer里面去的。这样后人定位业务逻辑相关代码的时候就非常方便了。
  
  代码样例：
- - (id)manager:(CsAPIBaseManager *)manager reformData:(NSDictionary *)data
+ - (id)manager:(CsAPIBaseManager *)manager reformData:(id)data
  {
  if ([manager isKindOfClass:[xinfangManager class]]) {
  return [self xinfangPhoneNumberWithData:data];      //这是调用了派生后reformer子类自己实现的函数，别忘了reformer自己也是一个对象呀。
@@ -150,7 +151,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  }
  }
  */
-- (id)manager:(__kindof CSAPIBaseManager *)manager reformData:(NSDictionary *)data;
+- (id)manager:(__kindof CSAPIBaseManager *)manager reformData:(id)data;
 @end
 
 
@@ -188,7 +189,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  因为判断逻辑都在这里做掉了。
  而且本来判断返回数据是否正确的逻辑就应该交给manager去做，不要放到回调到controller的delegate方法里面去做。
  */
-- (BOOL)manager:(__kindof CSAPIBaseManager *)manager isCorrectWithCallBackData:(NSDictionary *)data;
+- (BOOL)manager:(__kindof CSAPIBaseManager *)manager isCorrectWithCallBackData:(id)data;
 
 /*
  
@@ -202,7 +203,7 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  不过我还是建议认真写完这个参数验证，这样能够省去将来代码维护者很多的时间。
  
  */
-- (BOOL)manager:(__kindof CSAPIBaseManager *)manager isCorrectWithParamsData:(NSDictionary *)data;
+- (BOOL)manager:(__kindof CSAPIBaseManager *)manager isCorrectWithParamsData:(id)data;
 
 @end
 
@@ -232,12 +233,12 @@ static NSString * const kCSAPIBaseManagerRequestID = @"kCSAPIBaseManagerRequestI
  强行修改manager的这个状态有可能会造成程序流程的改变，容易造成混乱。
  */
 typedef NS_ENUM (NSUInteger, CSAPIManagerErrorType){
-    CSAPIManagerErrorTypeDefault,       //没有产生过API请求，这个是manager的默认状态。
-    CSAPIManagerErrorTypeSuccess,       //API请求成功且返回数据正确，此时manager的数据是可以直接拿来使用的。
-    CSAPIManagerErrorTypeNoContent,     //API请求成功但返回数据不正确。如果回调数据验证函数返回值为NO，manager的状态就会是这个。
-    CSAPIManagerErrorTypeParamsError,   //参数错误，此时manager不会调用API，因为参数验证是在调用API之前做的。
-    CSAPIManagerErrorTypeTimeout,       //请求超时。CSAPIProxy设置的是20秒超时，具体超时时间的设置请自己去看CSAPIProxy的相关代码。
-    CSAPIManagerErrorTypeNoNetWork      //网络不通。在调用API之前会判断一下当前网络是否通畅，这个也是在调用API之前验证的，和上面超时的状态是有区别的。
+    CSAPIManagerErrorTypeDefault,           //没有产生过API请求，这个是manager的默认状态。
+    CSAPIManagerErrorTypeSuccess,           //API请求成功且返回数据正确，此时manager的数据是可以直接拿来使用的。
+    CSAPIManagerErrorTypeContentError,      //API请求成功但返回数据不正确。如果回调数据验证函数返回值为NO，manager的状态就会是这个。
+    CSAPIManagerErrorTypeParamsError,       //参数错误，此时manager不会调用API，因为参数验证是在调用API之前做的。
+    CSAPIManagerErrorTypeTimeout,           //请求超时。CSAPIProxy设置的是20秒超时，具体超时时间的设置请自己去看CSAPIProxy的相关代码。
+    CSAPIManagerErrorTypeNoNetWork          //网络不通。在调用API之前会判断一下当前网络是否通畅，这个也是在调用API之前验证的，和上面超时的状态是有区别的。
 };
 
 typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
@@ -246,6 +247,21 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
     CSAPIManagerRequestTypePut,
     CSAPIManagerRequestTypeDelete
 };
+
+
+
+
+
+/*************************************************************************************************/
+/*                                         CSAPIStubs                                            */
+/*************************************************************************************************/
+
+@protocol CSAPIStubs <NSObject>
+@required
+
+@end
+
+
 
 /*************************************************************************************************/
 /*                                         CSAPIManager                                          */
@@ -307,8 +323,8 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 - (BOOL)manager:(__kindof CSAPIBaseManager *)manager afterPerformFailWithResponse:(CSURLResponse *)response;
 
 
-- (BOOL)manager:(__kindof CSAPIBaseManager *)manager shouldCallAPIWithParams:(NSDictionary *)response;
-- (BOOL)manager:(__kindof CSAPIBaseManager *)manager afterCallingAPIWithParams:(NSDictionary *)response;
+- (BOOL)manager:(__kindof CSAPIBaseManager *)manager shouldCallAPIWithParams:(NSDictionary *)params;
+- (BOOL)manager:(__kindof CSAPIBaseManager *)manager afterCallingAPIWithParams:(NSDictionary *)params;
 
 @end
 
@@ -364,6 +380,17 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 
 - (void)successedOnCallingAPI:(CSURLResponse *)response;
 - (void)failedOnCallingAPI:(nullable CSURLResponse *)response withErrorType:(CSAPIManagerErrorType)errorType;
+
+
+#pragma mark - HTTPStubs
+
+// 在loadData之前调用
+- (void)loadStubData;
+typedef BOOL(^CSAPIStubsCondition)(NSURLRequest *request);
+/// http stubs
+- (void)addAPIStubWithTag:(NSString *)tag responseData:(id)responseData statusCode:(int)statusCode requestTime:(NSTimeInterval)requestTime responseTime:(NSTimeInterval)responseTime condition:(CSAPIStubsCondition)condition;
+- (void)removeAllAPIStubs;
+- (void)removeAPIStubWithTag:(NSString *)tag;
 
 @end
 

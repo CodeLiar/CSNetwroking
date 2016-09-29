@@ -37,6 +37,7 @@
         TestAPIManager *manager = [[TestAPIManager alloc] init];
         manager.delegate = self;
         manager.paramSource = self;
+        [manager loadStubData];
         [manager loadData];
     }
 }
@@ -59,7 +60,7 @@
 - (void)managerCallAPIDidFailed:(__kindof CSAPIBaseManager *)manager
 {
     NSLog(@"%s", __FUNCTION__);
-    NSLog(@"%@", [manager fetchDataWithReformer:nil]);
+    NSLog(@"%ld", (long)manager.errorType);
 }
 
 @end

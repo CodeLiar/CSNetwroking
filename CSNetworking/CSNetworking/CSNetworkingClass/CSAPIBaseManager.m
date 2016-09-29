@@ -10,7 +10,8 @@
 #import "CSCache.h"
 #import "CSAPIProxy.h"
 #import "CSLogger.h"
-#import <AFNetworkReachabilityManager.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
 
 NSString * const kCSUserTokenInvalidNotification = @"kCSUserTokenInvalidNotification";
 NSString * const kCSUserTokenIllegalNotification = @"kCSUserTokenIllegalNotification";
@@ -29,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) CSAPIManagerErrorType errorType;
 @property (nonatomic, strong, nullable) NSMutableArray *requestIdList;
 @property (nonatomic, strong) CSCache *cache;
+
+@property (nonatomic, strong) NSMutableDictionary *stubsDic;
 
 @end
 NS_ASSUME_NONNULL_END
@@ -60,6 +63,11 @@ NS_ASSUME_NONNULL_END
     NSLog(@"%s", __FUNCTION__);
 }
 
+- (void)loadStubData
+{
+    [OHHTTPStubs setEnabled:YES];
+}
+
 #pragma mark - public method
 
 - (void)cancelAllRequests
@@ -83,6 +91,53 @@ NS_ASSUME_NONNULL_END
         resultData = [self.fetchedRawData mutableCopy];
     }
     return resultData;
+}
+
+#pragma mark - HTTPStubs
+- (void)addAPIStubWithTag:(NSString *)tag responseData:(id)responseData statusCode:(int)statusCode requestTime:(NSTimeInterval)requestTime responseTime:(NSTimeInterval)responseTime condition:(CSAPIStubsCondition)condition
+{
+#if DEBUG
+    id<OHHTTPStubsDescriptor> testStub = self.stubsDic[tag];
+    if (!testStub) {
+        testStub = [OHHTTPStubs stubRequestsPassingTest:condition withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
+            // Stub txt files with this
+            // OHHTTPStubsDownloadSpeedWifi responseTime
+            if ([responseData isKindOfClass:[NSError class]]) {
+                return [[OHHTTPStubsResponse responseWithError:responseData] requestTime:requestTime responseTime:responseTime];
+            }
+            else {
+                NSData *data = nil;
+                if ([responseData isKindOfClass:[NSString class]]) {
+                    data = [responseData dataUsingEncoding:NSUTF8StringEncoding];
+                } else {
+                    data = [NSJSONSerialization dataWithJSONObject:responseData options:0 error:nil];
+                }
+                return [[OHHTTPStubsResponse responseWithData:data statusCode:statusCode headers:@{@"Content-Type":@"text/plain"}] requestTime:requestTime responseTime:responseTime];
+            }
+        }];
+        testStub.name = tag;
+        self.stubsDic[tag] = testStub;
+    }
+#endif
+}
+
+- (void)removeAllAPIStubs
+{
+#if DEBUG
+    for (id<OHHTTPStubsDescriptor> stubs in self.stubsDic.allValues) {
+        [OHHTTPStubs removeStub:stubs];
+    }
+#endif
+}
+
+- (void)removeAPIStubWithTag:(NSString *)tag
+{
+#if DEBUG
+    id<OHHTTPStubsDescriptor> stubs = self.stubsDic[tag];
+    if (stubs) {
+        [OHHTTPStubs removeStub:stubs];
+    }
+#endif
 }
 
 #pragma mark - private methods
@@ -230,7 +285,7 @@ NS_ASSUME_NONNULL_END
         }
         [self afterPerformSuccessWithResponse:response];
     } else {
-        [self failedOnCallingAPI:response withErrorType:CSAPIManagerErrorTypeNoContent];
+        [self failedOnCallingAPI:response withErrorType:CSAPIManagerErrorTypeContentError];
     }
 }
 
@@ -239,38 +294,39 @@ NS_ASSUME_NONNULL_END
     self.isLoading = NO;
     self.response = response;
     self.fetchedRawData = nil;
-    if ([response.content[@"id"] isEqualToString:@"expired_access_token"]) {
-        // token 失效
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenInvalidNotification
-                                                            object:nil
-                                                          userInfo:@{
-                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
-                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
-                                                                     }];
-    } else if ([response.content[@"id"] isEqualToString:@"illegal_access_token"]) {
-        // token 无效，重新登录
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenIllegalNotification
-                                                            object:nil
-                                                          userInfo:@{
-                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
-                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
-                                                                     }];
-    } else if ([response.content[@"id"] isEqualToString:@"no_permission_for_this_api"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenIllegalNotification
-                                                            object:nil
-                                                          userInfo:@{
-                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
-                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
-                                                                     }];
-    } else {
-        // 其他错误
-        self.errorType = errorType;
-        [self removeRequestIdWithRequestID:response.requestId];
-        if ([self beforePerformFailWithResponse:response]) {
-            [self.delegate managerCallAPIDidFailed:self];
-        }
-        [self afterPerformFailWithResponse:response];
+    self.errorType = errorType;
+    [self removeRequestIdWithRequestID:response.requestId];
+    if ([self beforePerformFailWithResponse:response]) {
+        [self.delegate managerCallAPIDidFailed:self];
     }
+    [self afterPerformFailWithResponse:response];
+    
+//    if ([response.content[@"id"] isEqualToString:@"expired_access_token"]) {
+//        // token 失效
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenInvalidNotification
+//                                                            object:nil
+//                                                          userInfo:@{
+//                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
+//                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
+//                                                                     }];
+//    } else if ([response.content[@"id"] isEqualToString:@"illegal_access_token"]) {
+//        // token 无效，重新登录
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenIllegalNotification
+//                                                            object:nil
+//                                                          userInfo:@{
+//                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
+//                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
+//                                                                     }];
+//    } else if ([response.content[@"id"] isEqualToString:@"no_permission_for_this_api"]) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kCSUserTokenIllegalNotification
+//                                                            object:nil
+//                                                          userInfo:@{
+//                                                                     kCSUserTokenNotificationUserInfoKeyRequestToContinue:[response.request mutableCopy],
+//                                                                     kCSUserTokenNotificationUserInfoKeyManagerToContinue:self
+//                                                                     }];
+//    } else {
+//        // 其他错误
+//    }
 }
 
 #pragma mark - method for interceptor
@@ -425,6 +481,14 @@ NS_ASSUME_NONNULL_END
         _requestIdList = [[NSMutableArray alloc] init];
     }
     return _requestIdList;
+}
+
+- (NSMutableDictionary *)stubsDic
+{
+    if (_stubsDic == nil) {
+        _stubsDic = [[NSMutableDictionary alloc] init];
+    }
+    return _stubsDic;
 }
 
 - (BOOL)isReachable
