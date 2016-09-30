@@ -55,7 +55,7 @@
     
     [logString appendFormat:@"API Name:\t\t%@://%@%@\n", schemeName, hostName, [pathName CS_defaultValue:@"N/A"]];
     [logString appendFormat:@"Domain Name:\t%@://%@\n", schemeName, hostName];
-    [logString appendFormat:@"Method Name:\t%@\n", pathName];
+    [logString appendFormat:@"Path   Name:\t%@\n", pathName];
     [logString appendFormat:@"Params:\n%@\n\n", response.requestParams];
     [logString appendFormat:@"Content:\n\t%@\n\n", response.contentString];
     

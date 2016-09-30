@@ -156,6 +156,9 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
+    NSString *schemeName = self.schemeName;
+    NSString *hostName = self.hostName;
+    NSString *pathName = self.pathName;
     NSData *result = [self.cache fetchCachedDataWithAPIManager:self requestParams:params];
     
     if (result == nil) {
@@ -167,7 +170,7 @@ NS_ASSUME_NONNULL_END
         __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response pathName:strongSelf.pathName hostName:strongSelf.hostName schemeName: strongSelf.schemeName];
+        [CSLogger logDebugInfoWithCachedResponse:response pathName:pathName hostName:hostName schemeName: schemeName];
         [strongSelf successedOnCallingAPI:response];
     });
     return YES;
