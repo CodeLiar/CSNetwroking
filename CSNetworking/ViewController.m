@@ -13,6 +13,8 @@
 
 @interface ViewController () <CSAPIManagerCallBackDelegate, CSAPIManagerParamSource>
 
+@property (nonatomic, strong) NSMutableDictionary *dic;
+
 @end
 
 @implementation ViewController
@@ -21,6 +23,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self installStubs];
+    self.dic  = [NSMutableDictionary dictionary];
+}
+
+- (void)dealloc
+{
+    NSLog(@"%s", __FUNCTION__);
 }
 
 - (void)installStubs
@@ -30,6 +38,12 @@
 //    } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
 //        return [OHHTTPStubsResponse respon]
 //    }]
+}
+- (IBAction)pushAction:(id)sender {
+    
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    ViewController *vc = [story instantiateViewControllerWithIdentifier:@"ViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)requestAction:(id)sender {
@@ -55,12 +69,34 @@
 {
     NSLog(@"%s", __FUNCTION__);
     NSLog(@"%@", [manager fetchDataWithReformer:nil]);
+//    [NSArray arrayWithObject:self.dic];
+//    __weak typeof(self) wSelf = self;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [wSelf asyncMethod];
+//    });
+}
+
+- (void)asyncMethod
+{
+    for (int i = 0; i < 10000; i++) {
+        NSLog(@"%d", i);
+        [NSArray arrayWithObject:self.dic];
+    }
 }
 
 - (void)managerCallAPIDidFailed:(__kindof CSAPIBaseManager *)manager
 {
     NSLog(@"%s", __FUNCTION__);
     NSLog(@"%ld", (long)manager.errorType);
+    [NSArray arrayWithObject:self.dic];
+//    __weak typeof(self) wSelf = self;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for (int i = 0; i < 10000; i++) {
+//            NSLog(@"%d", i);
+//            [NSArray arrayWithObject:wSelf.dic];
+//        }
+//    });
+    
 }
 
 @end
