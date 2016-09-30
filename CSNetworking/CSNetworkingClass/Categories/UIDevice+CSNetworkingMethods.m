@@ -24,7 +24,7 @@
 // Return the local MAC addy
 // Courtesy of FreeBSD hackers email list
 // Accidentally munged during previous update. Fixed thanks to erica sadun & mlamb.
-- (NSString *) localMAC{
+- (NSString *)localMAC{
     
     int                 mib[6];
     size_t              len;
@@ -94,7 +94,7 @@
     }
 }
 
-- (NSString *) CS_udid
+- (NSString *)CS_udid
 {
     NSString *udid = [[CSUDIDGenerator sharedInstance] UDID];
     if (udid.length==0) {
@@ -176,7 +176,7 @@
     return machineType;
 }
 
-- (NSString *) CS_ostype{
+- (NSString *)CS_ostype{
     UIDevice *device = [UIDevice currentDevice];
     NSString *os = [device systemVersion];
     NSArray *array = [os componentsSeparatedByString:@"."];

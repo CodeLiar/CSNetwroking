@@ -59,7 +59,7 @@
     NSDictionary *dic = @{@"key": @"value"};
     __weak typeof(self) weakSelf = self;
     
-    [self addAPIStubWithTag:@"demo" responseData:dic statusCode:200 requestTime:3 responseTime:3 condition:^BOOL(NSURLRequest * _Nonnull request) {
+    [self addAPIStubWithTag:@"demo" responseData:dic statusCode:200 requestTime:0 responseTime:0 condition:^BOOL(NSURLRequest * _Nonnull request) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         return [request.URL.path isEqualToString:strongSelf.pathName];
     }];
