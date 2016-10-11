@@ -115,8 +115,9 @@
 /** 这个函数存在的意义在于，如果将来要把AFNetworking换掉，只要修改这个函数的实现即可。 */
 - (NSNumber *)callAPIWithRequest:(NSURLRequest *)request success:(nullable CSCallback)success fail:(nullable CSCallback)fail
 {
-    
+#if DEBUG
     NSLog(@"\n==================================\n\nRequest Start: \n\n %@\n\n==================================", request.URL);
+#endif
     
     // 跑到这里的block的时候，就已经是主线程了。
     __block NSURLSessionDataTask *dataTask = nil;

@@ -31,7 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSMutableArray *requestIdList;
 @property (nonatomic, strong) CSCache *cache;
 
+#if DEBUG
 @property (nonatomic, strong) NSMutableDictionary *stubsDic;
+#endif
 
 @end
 NS_ASSUME_NONNULL_END
@@ -61,6 +63,11 @@ NS_ASSUME_NONNULL_END
     [self cancelAllRequests];
     self.requestIdList = nil;
     NSLog(@"%s", __FUNCTION__);
+#if DEBUG
+    if (self.stubsDic.count > 0) {
+        [self removeAllAPIStubs];
+    }
+#endif
 }
 
 - (void)loadStubData
@@ -127,6 +134,7 @@ NS_ASSUME_NONNULL_END
     for (id<OHHTTPStubsDescriptor> stubs in self.stubsDic.allValues) {
         [OHHTTPStubs removeStub:stubs];
     }
+    [self.stubsDic removeAllObjects];
 #endif
 }
 
@@ -136,6 +144,7 @@ NS_ASSUME_NONNULL_END
     id<OHHTTPStubsDescriptor> stubs = self.stubsDic[tag];
     if (stubs) {
         [OHHTTPStubs removeStub:stubs];
+        [self.stubsDic removeObjectForKey:tag];
     }
 #endif
 }
@@ -486,6 +495,7 @@ NS_ASSUME_NONNULL_END
     return _requestIdList;
 }
 
+#if DEBUG
 - (NSMutableDictionary *)stubsDic
 {
     if (_stubsDic == nil) {
@@ -493,6 +503,7 @@ NS_ASSUME_NONNULL_END
     }
     return _stubsDic;
 }
+#endif
 
 - (BOOL)isReachable
 {
