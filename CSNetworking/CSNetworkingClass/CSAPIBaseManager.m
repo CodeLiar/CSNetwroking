@@ -165,22 +165,19 @@ NS_ASSUME_NONNULL_END
 
 - (BOOL)hasCacheWithParams:(NSDictionary *)params
 {
-    NSString *schemeName = self.schemeName;
-    NSString *hostName = self.hostName;
-    NSString *pathName = self.pathName;
     NSData *result = [self.cache fetchCachedDataWithAPIManager:self requestParams:params];
     
     if (result == nil) {
         return NO;
     }
     
-    __weak typeof(self) weakSelf = self;
+//    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        __strong typeof (weakSelf) strongSelf = weakSelf;
+//        __strong typeof (weakSelf) strongSelf = weakSelf;
         CSURLResponse *response = [[CSURLResponse alloc] initWithData:result];
         response.requestParams = params;
-        [CSLogger logDebugInfoWithCachedResponse:response pathName:pathName hostName:hostName schemeName: schemeName];
-        [strongSelf successedOnCallingAPI:response];
+        [CSLogger logDebugInfoWithCachedResponse:response pathName:self.pathName hostName:self.hostName schemeName: self.schemeName];
+        [self successedOnCallingAPI:response];
     });
     return YES;
 }
@@ -192,11 +189,9 @@ NS_ASSUME_NONNULL_END
     
     if (result) {
         self.isNativeDataEmpty = NO;
-        __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
             CSURLResponse *response = [[CSURLResponse alloc] initWithData:[NSJSONSerialization dataWithJSONObject:result options:0 error:NULL]];
-            [strongSelf successedOnCallingAPI:response];
+            [self successedOnCallingAPI:response];
         });
     } else {
         self.isNativeDataEmpty = YES;

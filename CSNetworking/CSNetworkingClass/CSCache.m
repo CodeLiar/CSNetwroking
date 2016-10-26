@@ -68,6 +68,9 @@
 {
     CSCachedObject *cachedObject = [self.cache objectForKey:key];
     if (cachedObject.isOutdataed || cachedObject.isEmpty) {
+        if (cachedObject.isOutdataed) {
+            [self.cache removeObjectForKey:key];
+        }
         return nil;
     } else {
         return cachedObject.content;
