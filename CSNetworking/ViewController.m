@@ -23,7 +23,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.dic  = [NSMutableDictionary dictionary];
-    [self requestAction:nil];
+//    [self requestAction:nil];
 }
 
 - (void)dealloc

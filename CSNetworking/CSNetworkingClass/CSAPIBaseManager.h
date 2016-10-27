@@ -360,6 +360,9 @@ typedef NS_ENUM (NSUInteger, CSAPIManagerRequestType){
 @property (nonatomic, assign, readonly) BOOL isReachable;
 @property (nonatomic, assign, readonly) BOOL isLoading;
 
+/// 网络请求标示
+@property (nonatomic, strong) NSString *tag;
+
 - (id)fetchDataWithReformer:(nullable id<CSAPIManagerDataReformer>)reformer;
 
 //尽量使用loadData这个方法,这个方法会通过param source来获得参数，这使得参数的生成逻辑位于controller中的固定位置
