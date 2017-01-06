@@ -438,22 +438,7 @@ NS_ASSUME_NONNULL_END
 //子类中覆盖这个函数的时候就不需要调用[super reformParams:params]了
 - (NSDictionary *)reformParams:(NSDictionary *)params
 {
-    IMP childIMP = [self methodForSelector:@selector(reformParams:)];
-    IMP selfIMP = [self methodForSelector:@selector(reformParams:)];
-    
-    if (childIMP == selfIMP) {
-        return params;
-    } else {
-        // 如果child是继承得来的，那么这里就不会跑到，会直接跑子类中的IMP。
-        // 如果child是另一个对象，就会跑到这里
-        NSDictionary *result = nil;
-        result = [self reformParams:params];
-        if (result) {
-            return result;
-        } else {
-            return params;
-        }
-    }
+    return params;
 }
 
 - (BOOL)shouldCache

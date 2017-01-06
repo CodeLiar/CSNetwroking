@@ -366,7 +366,7 @@
 				TargetAttributes = {
 					AE9BDA051D952F2D00B482A6 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 5VL5ZYH6UD;
+						DevelopmentTeam = 6L8742VYU6;
 						ProvisioningStyle = Automatic;
 					};
 					AE9BDA1E1D952F2D00B482A6 = {
@@ -729,11 +729,11 @@
 			baseConfigurationReference = 10D3B16BEF915A5531A182C6 /* Pods-CSNetworking.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5VL5ZYH6UD;
+				DEVELOPMENT_TEAM = 6L8742VYU6;
 				INFOPLIST_FILE = CSNetworking/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cs.CSNetworking;
+				PRODUCT_BUNDLE_IDENTIFIER = com.linkdoc.linkeyisheng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -743,11 +743,11 @@
 			baseConfigurationReference = B797C8F0A14C94A3554CD4DF /* Pods-CSNetworking.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5VL5ZYH6UD;
+				DEVELOPMENT_TEAM = 6L8742VYU6;
 				INFOPLIST_FILE = CSNetworking/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cs.CSNetworking;
+				PRODUCT_BUNDLE_IDENTIFIER = com.linkdoc.linkeyisheng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
