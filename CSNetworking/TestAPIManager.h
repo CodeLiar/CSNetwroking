@@ -7,7 +7,7 @@
 //
 
 #import "CSNetWorking.h"
-
+// 测试github
 @interface TestAPIManager : CSAPIBaseManager <CSAPIManagerValidator>
 
 @end
